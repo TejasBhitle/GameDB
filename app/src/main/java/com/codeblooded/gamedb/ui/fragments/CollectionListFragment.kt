@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.codeblooded.gamedb.R
+import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
  * Created by tejas on 8/5/17.
@@ -25,15 +26,11 @@ class CollectionListFragment : Fragment(){
         // !!. is a non-null asserted call
         val view = inflater!!.inflate(R.layout.fragment_list,container,false)
 
-        var textview = view.findViewById(R.id.center_text) as TextView
-        textview.setText("Collections")
+        centerTextView.text = "Collections"
 
-        val recyclerView = view.findViewById(R.id.recyclerView) as RecyclerView
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        //val gameListAdapter = GameListAdapter(context,getGames())
-        //recyclerView.adapter = gameListAdapter
 
         return view
     }

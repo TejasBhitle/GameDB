@@ -32,7 +32,8 @@ class GameListAdapter(internal var context: Context, internal var games : ArrayL
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val game = games.get(position)
-        holder!!.name.setText(game.getName())
+
+        holder!!.name.text = game.getName()
     }
 
     override fun getItemCount(): Int {

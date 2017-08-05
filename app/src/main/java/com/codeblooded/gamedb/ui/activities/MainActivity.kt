@@ -13,12 +13,13 @@ import android.widget.TextView
 import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
 
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
+
 
 class MainActivity : AppCompatActivity() {
 
-    //lateinit var textView:TextView
-    lateinit var drawerLayout:DrawerLayout
-    lateinit var navigationView:NavigationView
+    //lateinit var navigationView:NavigationView
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     lateinit var fm : FragmentManager
 
@@ -29,23 +30,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         gameListFragment = GameListFragment()
         collectionListFragment = CollectionListFragment()
 
-        drawerLayout = findViewById(R.id.drawerLayout) as DrawerLayout
-        navigationView = findViewById(R.id.nvView) as NavigationView
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.drawer_open, R.string.drawer_close)
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-
-        //textView = findViewById(R.id.textview) as TextView
-        //textView.setText(R.string.app_name)
 
 
         fm = supportFragmentManager
