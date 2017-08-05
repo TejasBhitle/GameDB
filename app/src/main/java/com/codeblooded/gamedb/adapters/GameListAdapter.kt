@@ -18,11 +18,7 @@ class GameListAdapter(internal var context: Context, internal var games : ArrayL
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
-        var name : TextView
-
-        init {
-            name = view.findViewById(R.id.list_item_game_name) as TextView
-        }
+        var name : TextView = view.findViewById(R.id.list_item_game_name) as TextView
 
     }
 
