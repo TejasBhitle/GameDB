@@ -8,6 +8,9 @@
         <item android:id="@+id/menu_item_games"
             android:title="@string/games"/>
 
+        <item android:id="@+id/menu_item_collections"
+            android:title="@string/collections"/>
+
     </group>
 
 </menu>
