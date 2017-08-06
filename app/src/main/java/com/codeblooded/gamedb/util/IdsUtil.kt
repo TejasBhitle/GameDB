@@ -12,12 +12,11 @@ import cz.msebera.android.httpclient.Header
 /**
  * Created by tejas on 8/6/17.
  */
-class IdsUtil internal  constructor( string : String ,callBackListener: IdCallBackListener) {
+class IdsUtil internal  constructor( string : String, callBackListener: IdCallBackListener) {
 
-    var listener : IdCallBackListener
+    var listener : IdCallBackListener = callBackListener
 
     init {
-        listener = callBackListener
 
         val requestParams: RequestParams = RequestParams()
 

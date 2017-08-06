@@ -1,5 +1,6 @@
 package com.codeblooded.gamedb.util
 
+import android.util.Log
 import com.codeblooded.gamedb.getAPIKey
 import com.codeblooded.gamedb.getBaseUrl
 import com.loopj.android.http.AsyncHttpResponseHandler
@@ -23,10 +24,12 @@ class RestClient {
         }
 
         fun get(url: String, params: RequestParams, responseHandler: AsyncHttpResponseHandler) {
+            Log.d("RestClient GET", url)
             client?.get(getAbsoluteUrl(url), params, responseHandler)
         }
 
         fun post(url: String, params: RequestParams, responseHandler: AsyncHttpResponseHandler) {
+            Log.d("RestClient POST", url)
             client?.post(getAbsoluteUrl(url), params, responseHandler)
         }
 

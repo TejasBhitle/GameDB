@@ -5,5 +5,12 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="collections">Collections</string>
+    <string name="sort">Sort</string>
+    <string name="popularity">Popularity</string>
+    <string name="release_date">Release date</string>
+    <string name="about">About</string>
+    <string name="welcome">Welcome to GameDB</string>
+    <string name="intro1">This app helps you discover new games and track your favourite ones</string>
+    <string name="rating">Ratings</string>
 
 </resources>

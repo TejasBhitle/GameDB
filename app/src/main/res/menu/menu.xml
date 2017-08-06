@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sort_mode"
+        android:title="@string/sort">
+        <menu>
+            <item
+                android:id="@+id/popular"
+                android:title="@string/popularity" />
+            <item
+                android:id="@+id/rating"
+                android:title="@string/rating"/>
+            <item
+                android:id="@+id/release_date"
+                android:title="@string/release_date" />
+        </menu>
+    </item>
+
+</menu>

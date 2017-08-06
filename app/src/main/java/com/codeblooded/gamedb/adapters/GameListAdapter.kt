@@ -33,7 +33,11 @@ class GameListAdapter(internal var context: Context, internal var games : ArrayL
         val game = games.get(position)
 
         holder!!.name.text = game.name
-        Picasso.with(context).load("https:"+game.img_url).into(holder.image)
+        Picasso.with(context)
+                .load("https:"+game.img_url)
+                .placeholder(R.drawable.ic_image_grey_24dp)
+                .error(R.drawable.ic_image_grey_24dp)
+                .into(holder.image)
     }
 
     override fun getItemCount(): Int {
