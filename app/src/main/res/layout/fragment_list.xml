@@ -8,13 +8,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:padding="5dp"/>
 
     <TextView
         android:id="@+id/centerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Games"
         android:textSize="20sp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>

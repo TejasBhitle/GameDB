@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
+import com.squareup.picasso.Picasso
 import java.util.ArrayList
 
 /**
@@ -19,6 +21,7 @@ class GameListAdapter(internal var context: Context, internal var games : ArrayL
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
         var name : TextView = view.findViewById(R.id.list_item_game_name) as TextView
+        var image : ImageView = view.findViewById(R.id.list_item_game_img) as ImageView
 
     }
 
@@ -30,6 +33,7 @@ class GameListAdapter(internal var context: Context, internal var games : ArrayL
         val game = games.get(position)
 
         holder!!.name.text = game.name
+        Picasso.with(context).load("https:"+game.img_url).into(holder.image)
     }
 
     override fun getItemCount(): Int {

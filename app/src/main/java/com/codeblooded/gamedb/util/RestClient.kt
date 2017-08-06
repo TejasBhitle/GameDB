@@ -17,9 +17,10 @@ class RestClient {
         private val BASE_URL = getBaseUrl()
         private var client: AsyncHttpClient? = AsyncHttpClient()
 
-        //client.addHeader("user-key", getAPIKey())
-        //client.addHeader("Accept", "application/json")
-
+        fun addHeaders(){
+            client?.addHeader("user-key", getAPIKey())
+            client?.addHeader("Accept", "application/json")
+        }
 
         fun get(url: String, params: RequestParams, responseHandler: AsyncHttpResponseHandler) {
             client?.get(getAbsoluteUrl(url), params, responseHandler)
