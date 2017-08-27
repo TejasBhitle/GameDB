@@ -12,5 +12,6 @@
     <string name="welcome">Welcome to GameDB</string>
     <string name="intro1">This app helps you discover new games and track your favourite ones</string>
     <string name="rating">Ratings</string>
+    <string name="empty_list">Failed to fetch games</string>
 
 </resources>
