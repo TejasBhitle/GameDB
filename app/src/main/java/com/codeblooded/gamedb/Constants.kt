@@ -4,6 +4,7 @@ package com.codeblooded.gamedb
  * Created by Samriddha on 07-08-2017.
  */
 
+const val GAME = "game"
 const val PREFERENCES = "prefs"
 const val FIRST_RUN = "first_run"
 const val SORT = "sort"

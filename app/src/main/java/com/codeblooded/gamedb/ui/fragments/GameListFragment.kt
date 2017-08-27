@@ -97,17 +97,22 @@ class GameListFragment : Fragment() {
         for (i in 0..(response!!.length() - 1)) {
             val obj = response.getJSONObject(i)
             var name = ""
+            var description = ""
             var url: String = ""
+            var bg_url: String = ""
             try {
                 name = obj.get("name").toString()
-                //val url = obj.getString("url").toString()
+                description = obj.get("summary").toString()
                 url = obj.getJSONObject("cover").getString("url")
+                bg_url = (obj.getJSONArray("screenshots").get(0) as JSONObject).getString("url")
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
             val game = Game()
             game.name = name
+            game.description = description
             game.img_url = url.replace("t_thumb", "t_cover_big")
+            game.bg_url = bg_url.replace("t_thumb", "t_cover_big")
             games.add(game)
 
         }

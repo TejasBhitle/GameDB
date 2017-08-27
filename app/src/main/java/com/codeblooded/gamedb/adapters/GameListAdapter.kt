@@ -1,14 +1,17 @@
 package com.codeblooded.gamedb.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.codeblooded.gamedb.GAME
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
+import com.codeblooded.gamedb.ui.activities.DetailActivity
 import com.squareup.picasso.Picasso
 import java.util.ArrayList
 
@@ -20,6 +23,7 @@ class GameListAdapter(internal var context: Context, internal var games : ArrayL
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
+        var root : View = view.findViewById(R.id.root)
         var name : TextView = view.findViewById(R.id.list_item_game_name)
         var image : ImageView = view.findViewById(R.id.list_item_game_img)
 
@@ -38,6 +42,12 @@ class GameListAdapter(internal var context: Context, internal var games : ArrayL
                 .placeholder(R.drawable.ic_image_grey_24dp)
                 .error(R.drawable.ic_image_grey_24dp)
                 .into(holder.image)
+        holder.root.setOnClickListener {
+            var intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra(GAME, game)
+            context.startActivity(intent)
+        }
+
     }
 
     override fun getItemCount(): Int {

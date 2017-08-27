@@ -19,6 +19,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".IntroActivity" />
+        <activity
+            android:name=".ui.activities.DetailActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codeblooded.gamedb.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
