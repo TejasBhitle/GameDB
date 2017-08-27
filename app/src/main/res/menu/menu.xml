@@ -11,9 +11,10 @@
             <item
                 android:id="@+id/rating"
                 android:title="@string/rating"/>
+            <!-- Hide this because sorting by latest releases always gives incomplete game data
             <item
                 android:id="@+id/release_date"
-                android:title="@string/release_date" />
+                android:title="@string/release_date" />-->
         </menu>
     </item>
 

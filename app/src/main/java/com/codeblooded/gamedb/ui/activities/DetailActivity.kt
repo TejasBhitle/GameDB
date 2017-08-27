@@ -30,8 +30,7 @@ class DetailActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            Snackbar.make(view, "Favorite game", Snackbar.LENGTH_LONG).show()
         }
 
         val description = findViewById<TextView>(R.id.description)

@@ -15,7 +15,6 @@ import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -81,10 +80,10 @@ class MainActivity : AppCompatActivity() {
                 pref.edit().putString(SORT, POPULARITY).apply()
                 gameListFragment.getGames()
             }
-            R.id.release_date -> {
+            /*R.id.release_date -> {
                 pref.edit().putString(SORT, FIRST_RELEASE_DATE).apply()
                 gameListFragment.getGames()
-            }
+            }*/
             R.id.rating -> {
                 pref.edit().putString(SORT, RATING).apply()
                 gameListFragment.getGames()
