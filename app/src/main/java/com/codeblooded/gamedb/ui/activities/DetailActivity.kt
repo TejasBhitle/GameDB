@@ -64,10 +64,14 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when (id) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
             R.id.action_share -> {
                 Snackbar.make(rootview, "Share game", Snackbar.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
 }
