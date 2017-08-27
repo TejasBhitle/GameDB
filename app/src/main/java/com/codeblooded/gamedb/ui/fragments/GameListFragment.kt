@@ -15,8 +15,8 @@ import com.codeblooded.gamedb.POPULARITY
 import com.codeblooded.gamedb.PREFERENCES
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.SORT
-import com.codeblooded.gamedb.ui.adapters.GameListAdapter
 import com.codeblooded.gamedb.model.Game
+import com.codeblooded.gamedb.ui.adapters.GameListAdapter
 import com.codeblooded.gamedb.util.RestClient
 import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.RequestParams
@@ -112,7 +112,7 @@ class GameListFragment : Fragment() {
             game.name = name
             game.description = description
             game.img_url = url.replace("t_thumb", "t_cover_big")
-            game.bg_url = bg_url.replace("t_thumb", "t_cover_big")
+            game.bg_url = bg_url.replace("t_thumb", "t_screenshot_big")
             games.add(game)
 
         }
