@@ -15,7 +15,7 @@ import com.codeblooded.gamedb.POPULARITY
 import com.codeblooded.gamedb.PREFERENCES
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.SORT
-import com.codeblooded.gamedb.adapters.GameListAdapter
+import com.codeblooded.gamedb.ui.adapters.GameListAdapter
 import com.codeblooded.gamedb.model.Game
 import com.codeblooded.gamedb.util.RestClient
 import com.loopj.android.http.JsonHttpResponseHandler
