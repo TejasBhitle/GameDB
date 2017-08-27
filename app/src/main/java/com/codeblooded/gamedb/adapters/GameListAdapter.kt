@@ -20,8 +20,8 @@ class GameListAdapter(internal var context: Context, internal var games : ArrayL
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
-        var name : TextView = view.findViewById(R.id.list_item_game_name) as TextView
-        var image : ImageView = view.findViewById(R.id.list_item_game_img) as ImageView
+        var name : TextView = view.findViewById(R.id.list_item_game_name)
+        var image : ImageView = view.findViewById(R.id.list_item_game_img)
 
     }
 

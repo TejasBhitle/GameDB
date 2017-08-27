@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.codeblooded.gamedb.R
+import org.w3c.dom.Text
 
 /**
  * Created by tejas on 8/5/17.
@@ -25,10 +26,10 @@ class CollectionListFragment : Fragment(){
         // !!. is a non-null asserted call
         val view = inflater!!.inflate(R.layout.fragment_list,container,false)
 
-        var textview = view.findViewById(R.id.centerTextView) as TextView
+        val textview = view.findViewById<TextView>(R.id.centerTextView)
         textview.text = "Collections"
 
-        val recyclerView = view.findViewById(R.id.recyclerView) as RecyclerView
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(activity)
 

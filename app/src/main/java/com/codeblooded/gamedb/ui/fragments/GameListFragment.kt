@@ -47,9 +47,9 @@ class GameListFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_list, container, false)
 
 
-        textview = view.findViewById(R.id.centerTextView) as TextView
+        textview = view.findViewById(R.id.centerTextView)
 
-        val recyclerView = view.findViewById(R.id.recyclerView) as RecyclerView
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 2)
 
