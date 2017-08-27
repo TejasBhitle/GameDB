@@ -5,14 +5,17 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
+import kotlinx.android.synthetic.main.activity_detail.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
@@ -102,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(collectionListFragment)
                 }
                 R.id.nav_about -> {
-
+                    Snackbar.make(drawerLayout, "About this app", Snackbar.LENGTH_SHORT).show()
                 }
             }
             navigationView.setCheckedItem(item.itemId)
