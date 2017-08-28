@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
 
 /**
  * Created by tejas on 8/5/17.
@@ -102,7 +103,7 @@ class GameListFragment : Fragment() {
             var bg_url: String = ""
             try {
                 name = obj.get("name").toString()
-                description = obj.get("summary").toString()
+                description = obj.get("summary").toString().replace(" \n  \n", "\n", true)
                 url = obj.getJSONObject("cover").getString("url")
                 bg_url = (obj.getJSONArray("screenshots").get(0) as JSONObject).getString("url")
             } catch (e: JSONException) {
