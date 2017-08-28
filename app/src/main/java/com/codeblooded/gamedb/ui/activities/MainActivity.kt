@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.codeblooded.gamedb.ui.activities.SignupActivity
 import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -70,6 +71,11 @@ class MainActivity : AppCompatActivity() {
 
         setupDrawer()
         navigationView.setCheckedItem(R.id.menu_item_games)
+        navigationView.getHeaderView(0).setOnClickListener {
+            startActivity(Intent(this@MainActivity, SignupActivity::class.java))
+        }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

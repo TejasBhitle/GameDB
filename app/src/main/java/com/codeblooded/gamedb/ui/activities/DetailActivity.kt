@@ -28,7 +28,7 @@ class DetailActivity : AppCompatActivity() {
         val toolbar_collapse = findViewById<View>(R.id.toolbar_collapse) as CollapsingToolbarLayout
         setSupportActionBar(toolbar)
 
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        val fab = findViewById<FloatingActionButton>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Favorite game", Snackbar.LENGTH_LONG).show()
         }
@@ -41,7 +41,11 @@ class DetailActivity : AppCompatActivity() {
 
         if (intent.extras != null) {
             val game = intent.extras.get(GAME) as Game
-            Log.e(localClassName, game.name + "\n" + game.description)
+            //Log.e(localClassName, game.name + "\n" + game.description)
+            Log.e(localClassName,"https:"+game.img_url)
+            Log.e(localClassName,"https:"+game.bg_url)
+
+
             toolbar_collapse.setTitle(game.name)
             description.setText(game.description)
             Picasso.with(this)
