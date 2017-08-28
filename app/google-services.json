@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "635678864032",
+    "firebase_url": "https://gamedb-2da8c.firebaseio.com",
+    "project_id": "gamedb-2da8c",
+    "storage_bucket": "gamedb-2da8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635678864032:android:e44349fbc40f386f",
+        "android_client_info": {
+          "package_name": "com.codeblooded.gamedb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635678864032-1jg054vltdqpifg263rssuffnmukn1nq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codeblooded.gamedb",
+            "certificate_hash": "e706782addec10a2adc6f647f80fa51ada2b8500"
+          }
+        },
+        {
+          "client_id": "635678864032-sodcphhmp313br4lek3nrs03rka1a5oh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codeblooded.gamedb",
+            "certificate_hash": "e0665ed531b2f82da1a72739f56ab23e0eda38e5"
+          }
+        },
+        {
+          "client_id": "635678864032-04tb4vrn5umivjhq6v5576552r618f0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuebhG7aRhvg31Q0my4ZDG0PDynF0gLDA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635678864032-04tb4vrn5umivjhq6v5576552r618f0i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
