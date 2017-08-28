@@ -12,12 +12,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.codeblooded.gamedb.*
-
+import com.codeblooded.gamedb.GAME
+import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.list_item_game.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -41,13 +40,13 @@ class DetailActivity : AppCompatActivity() {
 
         if (intent.extras != null) {
             val game = intent.extras.get(GAME) as Game
-            //Log.e(localClassName, game.name + "\n" + game.description)
+            Log.e(localClassName, game.name + "\n" + game.description)
             Log.e(localClassName,"https:"+game.img_url)
             Log.e(localClassName,"https:"+game.bg_url)
 
 
-            toolbar_collapse.setTitle(game.name)
-            description.setText(game.description)
+            toolbar_collapse.title = game.name
+            description.text = game.description
             Picasso.with(this)
                     .load("https:"+game.img_url)
                     .placeholder(R.drawable.ic_image_grey_24dp)
