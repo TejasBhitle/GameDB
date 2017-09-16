@@ -8,17 +8,17 @@ import org.json.JSONArray
  * Created by tejas on 8/4/17.
  */
  class Game() :Parcelable {
-    var id: Int? = null
-    var name : String? = null
-    var description : String? = null
-    var url: String? = null
-    var storyline: String? = null
+    var id: Int = 0
+    var name : String = ""
+    var description : String = ""
+    var url: String = ""
+    var storyline: String =""
     var user_rating: Double = 0.0
     var critic_rating: Double = 0.0
-    var img_url : String? = null
-    var bg_url : String? = null
+    var img_url : String = ""
+    var bg_url : String = ""
     var games: JSONArray = JSONArray()
-    var release_date: String? = null
+    var release_date: String = ""
     var screenshots: JSONArray = JSONArray()
     var videos: JSONArray = JSONArray()
 
@@ -39,7 +39,7 @@ import org.json.JSONArray
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id!!)
+        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeString(url)
