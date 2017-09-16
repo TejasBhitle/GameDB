@@ -17,8 +17,11 @@ import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
+import android.widget.Toast
+import android.content.Intent
 
 class DetailActivity : AppCompatActivity() {
+    lateinit var game : Game
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +38,14 @@ class DetailActivity : AppCompatActivity() {
         val description = findViewById<TextView>(R.id.description)
         val image = findViewById<ImageView>(R.id.image)
         val bg = findViewById<ImageView>(R.id.bg_img)
+        val user_rating = findViewById<TextView>(R.id.user_rating)
+        val critic_rating = findViewById<TextView>(R.id.critic_rating)
+        val release_date = findViewById<TextView>(R.id.release_date)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         if (intent.extras != null) {
-            val game = intent.extras.get(GAME) as Game
+            game = intent.extras.get(GAME) as Game
             Log.e(localClassName, game.name + "\n" + game.description)
             Log.e(localClassName,"https:"+game.img_url)
             Log.e(localClassName,"https:"+game.bg_url)
@@ -47,6 +53,9 @@ class DetailActivity : AppCompatActivity() {
 
             toolbar_collapse.title = game.name
             description.text = game.description
+            if (game.release_date != "") release_date.text = game.release_date
+            if (game.user_rating != 0.0) user_rating.text = String.format("%.2f", game.user_rating)
+            if (game.critic_rating != 0.0) critic_rating.text = String.format("%.2f", game.critic_rating)
             Picasso.with(this)
                     .load("https:"+game.img_url)
                     .placeholder(R.drawable.ic_image_grey_24dp)

@@ -122,7 +122,7 @@ class GameListFragment : Fragment() {
                 if (obj.has("aggregated_rating")) critic_rating = obj.getDouble("aggregated_rating")
                 if (obj.has("cover")) img_url = obj.getJSONObject("cover").getString("url")
                 if (obj.has("games")) games = obj.getJSONArray("games")
-                if (obj.has("release_date")) release_date = sdf.format(Date(obj.get("release_date") as String))
+                if (obj.has("first_release_date")) release_date = sdf.format(Date(obj.get("first_release_date") as Long))
                 if (obj.has("screenshots")) {
                     screenshots = obj.getJSONArray("screenshots")
                     bg_url = (screenshots.get(0) as JSONObject).getString("url")
