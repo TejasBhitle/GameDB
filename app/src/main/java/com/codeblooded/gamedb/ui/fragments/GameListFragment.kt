@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -94,34 +95,62 @@ class GameListFragment : Fragment() {
     }
 
     fun updateUI(response: JSONArray?) {
-        val games: ArrayList<Game> = ArrayList()
+        val gamesList: ArrayList<Game> = ArrayList()
+        val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.UK)
         for (i in 0..(response!!.length() - 1)) {
             val obj = response.getJSONObject(i)
+            var id: Int? = null
             var name = ""
             var description = ""
             var url: String = ""
-            var bg_url: String = ""
+            var storyline: String = ""
+            var user_rating: Double = 0.0
+            var critic_rating: Double = 0.0
+            var img_url: String? = null
+            var bg_url: String? = null
+            var games: JSONArray = JSONArray()
+            var release_date: String? = null
+            var screenshots: JSONArray = JSONArray()
+            var videos: JSONArray = JSONArray()
             try {
+                id = obj.getInt("id")
                 name = obj.get("name").toString()
                 description = obj.get("summary").toString().replace(" \n  \n", "\n", true)
-                url = obj.getJSONObject("cover").getString("url")
+                url = obj.getString("url")
+                storyline = obj.getString("storyline")
+                user_rating = obj.getDouble("rating")
+                critic_rating = obj.getDouble("aggregated_rating")
+                img_url = obj.getJSONObject("cover").getString("url")
                 bg_url = (obj.getJSONArray("screenshots").get(0) as JSONObject).getString("url")
+                games = obj.getJSONArray("games")
+                release_date = sdf.format(Date(obj.get("release_date") as String))
+                screenshots = obj.getJSONArray("screenshots")
+                videos = obj.getJSONArray("videos")
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
             val game = Game()
+            game.id = id
             game.name = name
             game.description = description
-            game.img_url = url.replace("t_thumb", "t_cover_big")
-            game.bg_url = bg_url.replace("t_thumb", "t_screenshot_big")
-            games.add(game)
+            game.url = url
+            game.storyline = storyline
+            game.user_rating = user_rating
+            game.critic_rating = critic_rating
+            game.img_url = img_url?.replace("t_thumb", "t_cover_big")
+            game.bg_url = bg_url?.replace("t_thumb", "t_screenshot_big")
+            game.games = games
+            game.release_date = release_date
+            game.screenshots = screenshots
+            game.videos = videos
+            gamesList.add(game)
 
         }
         progressDialog.cancel()
-        if (games.size == 0)
+        if (gamesList.size == 0)
             textview.text = getString(R.string.empty_list)
 
-        recyclerView.adapter = GameListAdapter(context, games)
+        recyclerView.adapter = GameListAdapter(context, gamesList)
 
         // Toast.makeText(context,"Success",Toast.LENGTH_SHORT).show()
 
