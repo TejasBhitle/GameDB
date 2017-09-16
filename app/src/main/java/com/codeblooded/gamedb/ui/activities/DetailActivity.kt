@@ -67,8 +67,9 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_detail, menu)
+        if (game.url == "") menu.findItem(R.id.action_share).isVisible = false
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -79,7 +80,14 @@ class DetailActivity : AppCompatActivity() {
                 onBackPressed()
             }
             R.id.action_share -> {
-                Snackbar.make(rootview, "Share game", Snackbar.LENGTH_SHORT).show()
+                val share = Intent(Intent.ACTION_SEND)
+                share.putExtra(Intent.EXTRA_TEXT, getString(R.string.check_out) + " \"" + game.name + "\"\n" + game.url + "\n")
+                share.type = "text/plain"
+                if (share.resolveActivity(packageManager) != null) {
+                    startActivity(Intent.createChooser(share, resources.getString(R.string.share_via)))
+                } else {
+                    Toast.makeText(this, R.string.no_share_app_found, Toast.LENGTH_SHORT).show()
+                }
             }
         }
         return super.onOptionsItemSelected(item)

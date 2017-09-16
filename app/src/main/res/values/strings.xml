@@ -107,5 +107,9 @@
     <string name="user_rating">User Rating</string>
     <string name="critic_rating">Critic Rating</string>
     <string name="summary">Summary</string>
+    <string name="na">N/A</string>
+    <string name="share_via">Share via</string>
+    <string name="no_share_app_found">No app found for sharing</string>
+    <string name="check_out">Check out</string>
 
 </resources>
