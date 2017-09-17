@@ -4,14 +4,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="170dp"
     android:background="@color/colorPrimary">
 
     <TextView
+        android:id="@+id/header_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign in"
-        android:textSize="25sp"
+        android:textSize="18sp"
         android:padding="20dp"
         android:layout_alignParentBottom="true"
         android:textColor="@android:color/white"/>

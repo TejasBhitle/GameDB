@@ -13,9 +13,11 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import com.codeblooded.gamedb.ui.activities.SignupActivity
 import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_detail.*
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -74,6 +76,13 @@ class MainActivity : AppCompatActivity() {
         navigationView.getHeaderView(0).setOnClickListener {
             startActivity(Intent(this@MainActivity, SignupActivity::class.java))
         }
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val header = navigationView.getHeaderView(0)
+        val textview = header.findViewById<TextView>(R.id.header_textView)
+        if(currentUser != null)
+            textview.text = currentUser.email
+        else textview.text = "Sign in"
 
 
     }
