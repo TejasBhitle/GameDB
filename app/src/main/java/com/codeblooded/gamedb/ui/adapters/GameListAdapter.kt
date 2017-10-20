@@ -13,7 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.codeblooded.gamedb.GAME
+import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
 import com.codeblooded.gamedb.ui.activities.DetailActivity
@@ -55,7 +55,7 @@ class GameListAdapter(internal var context: Context, internal var games: ArrayLi
                 val p = Pair.create(view, "cover")
                 bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, p).toBundle()
             }
-            intent.putExtra(GAME, game)
+            intent.putExtra(Constants.GAME, game)
             context.startActivity(intent, bundle)
 
         }

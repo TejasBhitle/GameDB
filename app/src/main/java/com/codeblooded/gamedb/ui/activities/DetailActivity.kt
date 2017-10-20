@@ -12,16 +12,22 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.codeblooded.gamedb.GAME
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import android.widget.Toast
 import android.content.Intent
+import com.codeblooded.gamedb.Constants
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+
+const val LOG = "DetailActivity"
 
 class DetailActivity : AppCompatActivity() {
     lateinit var game : Game
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +38,7 @@ class DetailActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Favorite game", Snackbar.LENGTH_LONG).show()
+            addToFavorites()
         }
 
         val description = findViewById<TextView>(R.id.description)
@@ -45,7 +51,7 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         if (intent.extras != null) {
-            game = intent.extras.get(GAME) as Game
+            game = intent.extras.get(Constants.GAME) as Game
             Log.e(localClassName, game.name + "\n" + game.description)
             Log.e(localClassName,"https:"+game.img_url)
             Log.e(localClassName,"https:"+game.bg_url)
@@ -65,6 +71,31 @@ class DetailActivity : AppCompatActivity() {
                     .load("https:"+game.bg_url)
                     .into(bg)
         }
+    }
+
+    fun addToFavorites(){
+
+        val root = FirebaseDatabase.getInstance().reference
+        val uid = FirebaseAuth.getInstance().currentUser?.uid as String
+        val ref = root.child(uid).child(Constants.FAVORITES)
+
+        val pushKey = game.id.toString() //ref.push().key
+
+        val hashMap = game.getHashMap()
+
+        val updateMap = HashMap<String,Any>()
+        updateMap.put(pushKey,hashMap)
+
+        ref.updateChildren(updateMap, DatabaseReference.CompletionListener {
+            databaseError, databaseReference ->
+
+            if(databaseError != null)
+                Log.e(LOG,databaseError.message)
+            else
+                Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT).show()
+
+        })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -11,10 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.codeblooded.gamedb.POPULARITY
-import com.codeblooded.gamedb.PREFERENCES
+import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
-import com.codeblooded.gamedb.SORT
 import com.codeblooded.gamedb.model.Game
 import com.codeblooded.gamedb.ui.adapters.GameListAdapter
 import com.codeblooded.gamedb.util.RestClient
@@ -38,10 +36,6 @@ class GameListFragment : Fragment() {
 
     lateinit var pref: SharedPreferences
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -55,7 +49,7 @@ class GameListFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        pref = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+        pref = context.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
         getGames()
         return view
@@ -67,7 +61,7 @@ class GameListFragment : Fragment() {
         progressDialog.show()
 
         RestClient.addHeaders()
-        RestClient.get("/games/?fields=*&order=" + pref.getString(SORT, POPULARITY), RequestParams(), object : JsonHttpResponseHandler() {
+        RestClient.get("/games/?fields=*&order=" + pref.getString(Constants.SORT, Constants.POPULARITY), RequestParams(), object : JsonHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
                 super.onSuccess(statusCode, headers, response)
@@ -99,7 +93,7 @@ class GameListFragment : Fragment() {
         val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.UK)
         for (i in 0..(response!!.length() - 1)) {
             val obj = response.getJSONObject(i)
-            var id: Int = 0
+            var id: Long = 0
             var name = ""
             var description = ""
             var url: String = ""
@@ -113,7 +107,7 @@ class GameListFragment : Fragment() {
             var screenshots: JSONArray = JSONArray()
             var videos: JSONArray = JSONArray()
             try {
-                id = obj.getInt("id")
+                id = obj.getLong("id")
                 name = obj.get("name").toString()
                 if (obj.has("summary")) description = obj.get("summary").toString().replace(" \n  \n", "\n", true)
                 if (obj.has("url")) url = obj.getString("url")
@@ -153,8 +147,6 @@ class GameListFragment : Fragment() {
             textview.text = getString(R.string.empty_list)
 
         recyclerView.adapter = GameListAdapter(context, gamesList)
-
-        // Toast.makeText(context,"Success",Toast.LENGTH_SHORT).show()
 
     }
 

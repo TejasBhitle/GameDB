@@ -16,12 +16,11 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.codeblooded.gamedb.ui.activities.SignupActivity
 import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
+import com.codeblooded.gamedb.ui.fragments.FavoritesFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_detail.*
 
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var gameListFragment : GameListFragment
     lateinit var collectionListFragment : CollectionListFragment
+    lateinit var favoritesFragment : FavoritesFragment
 
     lateinit var pref :SharedPreferences
 
@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         gameListFragment = GameListFragment()
         collectionListFragment = CollectionListFragment()
+        favoritesFragment = FavoritesFragment()
 
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.drawer_open, R.string.drawer_close)
@@ -50,15 +51,15 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
-        pref = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+        pref = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
-        if (pref.getBoolean(FIRST_RUN, true)) {
+        if (pref.getBoolean(Constants.FIRST_RUN, true)) {
             val i = Intent(this@MainActivity, IntroActivity::class.java)
             startActivity(i)
             //  Make a new preferences editor
             val e = pref.edit()
             //  Edit preference to make it false because we don't want this to run again
-            e.putBoolean(FIRST_RUN, false)
+            e.putBoolean(Constants.FIRST_RUN, false)
             //  Apply changes
             e.apply()
         }
@@ -96,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
         when (id) {
             R.id.popular -> {
-                pref.edit().putString(SORT, POPULARITY).apply()
+                pref.edit().putString(Constants.SORT,Constants.POPULARITY).apply()
                 gameListFragment.getGames()
             }
             /*R.id.release_date -> {
@@ -104,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                 gameListFragment.getGames()
             }*/
             R.id.rating -> {
-                pref.edit().putString(SORT, RATING).apply()
+                pref.edit().putString(Constants.SORT,Constants.RATING).apply()
                 gameListFragment.getGames()
             }
         }
@@ -120,6 +121,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_item_collections -> {
                     replaceFragment(collectionListFragment)
                 }
+                R.id.menu_item_favorites -> {
+                    replaceFragment(favoritesFragment)
+                }
                 R.id.nav_about -> {
                     Snackbar.make(drawerLayout, "About this app", Snackbar.LENGTH_SHORT).show()
                 }
@@ -131,9 +135,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment){
-        val ft = fm.beginTransaction() as FragmentTransaction
-        ft.replace(R.id.frame,fragment)
-        ft.commit()
+        fm.beginTransaction()
+                .replace(R.id.frame,fragment)
+                .commit()
     }
 
 }

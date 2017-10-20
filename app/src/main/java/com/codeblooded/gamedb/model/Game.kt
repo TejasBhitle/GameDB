@@ -2,13 +2,16 @@ package com.codeblooded.gamedb.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.codeblooded.gamedb.Constants
 import org.json.JSONArray
+
+
 
 /**
  * Created by tejas on 8/4/17.
  */
  class Game() :Parcelable {
-    var id: Int = 0
+    var id: Long = 0
     var name : String = ""
     var description : String = ""
     var url: String = ""
@@ -22,8 +25,24 @@ import org.json.JSONArray
     var screenshots: JSONArray = JSONArray()
     var videos: JSONArray = JSONArray()
 
+
+    fun getHashMap(): HashMap<String, Any> {
+        val hashmap = HashMap<String, Any>()
+        hashmap.put(Constants.ID,id)
+        hashmap.put(Constants.NAME, name)
+        hashmap.put(Constants.DESCRIPTION, description)
+        hashmap.put(Constants.URL, url)
+        hashmap.put(Constants.STORYLINE,storyline)
+        hashmap.put(Constants.USER_RATING,user_rating)
+        hashmap.put(Constants.CRITIC_RATING,critic_rating)
+        hashmap.put(Constants.IMG_URL,img_url)
+        hashmap.put(Constants.BG_URL,bg_url)
+        hashmap.put(Constants.RELEASE_DATE,release_date)
+        return hashmap
+    }
+
     constructor(parcel: Parcel) : this() {
-        id = parcel.readInt()
+        id = parcel.readLong()
         name = parcel.readString()
         description = parcel.readString()
         url = parcel.readString()
@@ -39,7 +58,7 @@ import org.json.JSONArray
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
+        parcel.writeLong(id)
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeString(url)
