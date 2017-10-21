@@ -39,7 +39,6 @@ class FavoritesFragment : Fragment() {
         textview = view.findViewById(R.id.centerTextView)
         progressDialog = ProgressDialog(context)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-
         return view
     }
 
@@ -64,6 +63,7 @@ class FavoritesFragment : Fragment() {
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
+                    favorites.clear()
                     for (snapshot in dataSnapshot.children) {
                         val id = snapshot.child(Constants.ID).value as Long
                         val name = snapshot.child(Constants.NAME).value as String
@@ -107,11 +107,19 @@ class FavoritesFragment : Fragment() {
 
     fun updateUI(context: Context, favorites: ArrayList<Game>) {
         progressDialog.cancel()
-        val adapter = GameListAdapter(context, favorites)
         Log.e(LOG, "updateUI")
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
-        recyclerView.adapter = adapter
+        if(favorites.size != 0) {
+            textview.visibility = View.GONE
+            val adapter = GameListAdapter(context, favorites)
+            recyclerView.setHasFixedSize(true)
+            recyclerView.layoutManager = GridLayoutManager(context, 2)
+            recyclerView.adapter = adapter
+        }
+        else{
+            textview.text = "No Favorites"
+            textview.visibility = View.VISIBLE
+        }
+
     }
 
 
