@@ -20,6 +20,8 @@ import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.FavoritesFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.LibsBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -140,6 +142,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_about -> {
                     Snackbar.make(drawerLayout, "About this app", Snackbar.LENGTH_SHORT).show()
+                    LibsBuilder()
+                            //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+                            .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                            //start the activity
+                            .start(this@MainActivity)
                 }
             }
             navigationView.setCheckedItem(item.itemId)

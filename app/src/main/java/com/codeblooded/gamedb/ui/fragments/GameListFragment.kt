@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
@@ -60,31 +61,36 @@ class GameListFragment : Fragment() {
         progressDialog.setMessage("Fetching Games")
         progressDialog.show()
 
-        RestClient.addHeaders()
-        RestClient.get("/games/?fields=*&order=" + pref.getString(Constants.SORT, Constants.POPULARITY), RequestParams(), object : JsonHttpResponseHandler() {
+        if(RestClient.isNetworkConnected(context)) {
+            RestClient.addHeaders()
+            RestClient.get("/games/?fields=*&order=" + pref.getString(Constants.SORT, Constants.POPULARITY), RequestParams(), object : JsonHttpResponseHandler() {
 
-            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
-                super.onSuccess(statusCode, headers, response)
-            }
+                override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
+                    super.onSuccess(statusCode, headers, response)
+                }
 
-            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONArray?) {
-                super.onSuccess(statusCode, headers, response)
-                updateUI(response)
-            }
+                override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONArray?) {
+                    super.onSuccess(statusCode, headers, response)
+                    updateUI(response)
+                }
 
-            override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONObject?) {
-                super.onFailure(statusCode, headers, throwable, errorResponse)
-            }
+                override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONObject?) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse)
+                }
 
-            override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONArray?) {
-                super.onFailure(statusCode, headers, throwable, errorResponse)
-            }
+                override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONArray?) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse)
+                }
 
-            override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
-                super.onFailure(statusCode, headers, responseString, throwable)
-            }
+                override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseString: String?, throwable: Throwable?) {
+                    super.onFailure(statusCode, headers, responseString, throwable)
+                }
 
-        })
+            })
+        }
+        else{
+            Toast.makeText(context,"No network",Toast.LENGTH_SHORT).show()
+        }
 
     }
 

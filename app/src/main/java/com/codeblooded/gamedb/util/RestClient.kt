@@ -1,5 +1,7 @@
 package com.codeblooded.gamedb.util
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.util.Log
 import com.codeblooded.gamedb.getAPIKey
 import com.codeblooded.gamedb.getBaseUrl
@@ -35,6 +37,12 @@ class RestClient {
 
         private fun getAbsoluteUrl(relativeUrl: String): String {
             return BASE_URL + relativeUrl
+        }
+
+        fun isNetworkConnected(context: Context): Boolean {
+            val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = manager.activeNetworkInfo
+            return networkInfo != null && networkInfo.isConnected
         }
 
    }

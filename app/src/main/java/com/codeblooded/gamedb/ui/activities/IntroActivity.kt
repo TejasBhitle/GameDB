@@ -1,10 +1,6 @@
 package com.codeblooded.gamedb
 
-import android.accessibilityservice.GestureDescription
 import android.os.Bundle
-import com.codeblooded.gamedb.R
-import com.codeblooded.gamedb.ui.fragments.SignUpFragmentSlide
-import com.heinrichreimersoftware.materialintro.slide.FragmentSlide
 
 import com.heinrichreimersoftware.materialintro.slide.SimpleSlide
 

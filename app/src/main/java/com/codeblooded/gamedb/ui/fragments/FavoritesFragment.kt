@@ -13,11 +13,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
 import com.codeblooded.gamedb.ui.activities.LOG
 import com.codeblooded.gamedb.ui.adapters.GameListAdapter
+import com.codeblooded.gamedb.util.RestClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -44,9 +46,14 @@ class FavoritesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val task = FavoriteFetchAsyncTask(activity)
-        progressDialog.show()
-        task.execute()
+        if(RestClient.isNetworkConnected(activity)) {
+            val task = FavoriteFetchAsyncTask(activity)
+            progressDialog.show()
+            task.execute()
+        }
+        else{
+            Toast.makeText(context,"No network",Toast.LENGTH_SHORT).show()
+        }
     }
 
     inner class FavoriteFetchAsyncTask(activity: Activity) : AsyncTask<String, Void, ArrayList<Game>>() {
