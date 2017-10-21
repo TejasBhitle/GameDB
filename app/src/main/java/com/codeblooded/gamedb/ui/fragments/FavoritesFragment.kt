@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,38 +16,26 @@ import android.widget.TextView
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
-import android.util.Log
 import com.codeblooded.gamedb.ui.activities.LOG
 import com.codeblooded.gamedb.ui.adapters.GameListAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 /**
  * Created by tejas on 10/20/17.
  */
-class FavoritesFragment : Fragment(){
+class FavoritesFragment : Fragment() {
 
     lateinit var textview: TextView
-    lateinit var recyclerView : RecyclerView
-    lateinit var progressDialog : ProgressDialog
-
-    fun updateUI(context: Context, favorites: ArrayList<Game>){
-        progressDialog.cancel()
-        val adapter = GameListAdapter(context,favorites)
-        Log.e(LOG,"updateUI")
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
-        recyclerView.adapter = adapter
-    }
+    lateinit var recyclerView: RecyclerView
+    lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         val view = inflater!!.inflate(R.layout.fragment_list, container, false)
-
         textview = view.findViewById(R.id.centerTextView)
         progressDialog = ProgressDialog(context)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
@@ -61,10 +50,9 @@ class FavoritesFragment : Fragment(){
         task.execute()
     }
 
-    inner class FavoriteFetchAsyncTask(activity: Activity) : AsyncTask<String,Void,ArrayList<Game>>(){
+    inner class FavoriteFetchAsyncTask(activity: Activity) : AsyncTask<String, Void, ArrayList<Game>>() {
 
         val activity = activity
-
 
         override fun doInBackground(vararg p0: String?): ArrayList<Game> {
             var favorites = ArrayList<Game>()
@@ -91,8 +79,8 @@ class FavoritesFragment : Fragment(){
                         val game = Game()
                         game.id = id
                         game.name = name
-                        game.description =description
-                        game.url =url
+                        game.description = description
+                        game.url = url
                         game.storyline = storyline
                         game.user_rating = userRating
                         game.critic_rating = criticRating
@@ -103,21 +91,27 @@ class FavoritesFragment : Fragment(){
                         favorites.add(game)
                     }
 
-                    updateUI(activity,favorites)
+                    updateUI(activity, favorites)
                     Log.e("DoINBackground", "Data Fetched")
-
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e(LOG,"onCancelled " + databaseError)
+                    Log.e(LOG, "onCancelled " + databaseError)
                 }
             }
 
-            ref.addValueEventListener( valueEventListener )
-
+            ref.addValueEventListener(valueEventListener)
             return favorites// useless
         }
+    }
 
+    fun updateUI(context: Context, favorites: ArrayList<Game>) {
+        progressDialog.cancel()
+        val adapter = GameListAdapter(context, favorites)
+        Log.e(LOG, "updateUI")
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        recyclerView.adapter = adapter
     }
 
 

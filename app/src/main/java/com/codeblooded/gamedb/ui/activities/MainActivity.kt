@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var collectionListFragment : CollectionListFragment
     lateinit var favoritesFragment : FavoritesFragment
     var isLoggedIn : Boolean = false
+    var isMenuActive : Boolean = true
 
     lateinit var pref :SharedPreferences
 
@@ -98,8 +99,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        if(isMenuActive)
+            menuInflater.inflate(R.menu.menu, menu)
+
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -125,16 +128,16 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_item_games -> {
-                    replaceFragment(gameListFragment)
+                    replaceFragment(gameListFragment,true)
                     setTitle(R.string.games)
                 }
                 R.id.menu_item_collections -> {
-                    replaceFragment(collectionListFragment)
+                    replaceFragment(collectionListFragment,true)
                     setTitle(R.string.collections)
                 }
                 R.id.menu_item_favorites -> {
                     if(isLoggedIn) {
-                        replaceFragment(favoritesFragment)
+                        replaceFragment(favoritesFragment,false)
                         setTitle(R.string.favorites)
                     }
                     else {
@@ -151,10 +154,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment, isMenuActive: Boolean){
         fm.beginTransaction()
                 .replace(R.id.frame,fragment)
                 .commit()
+        this.isMenuActive = isMenuActive
+        invalidateOptionsMenu()
     }
 
 }
