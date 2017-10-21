@@ -113,5 +113,6 @@
     <string name="check_out">Check out</string>
     <string name="favorites">Favorites</string>
     <string name="account">Account details</string>
+    <string name="app_description">Open source application for Game geeks</string>
 
 </resources>

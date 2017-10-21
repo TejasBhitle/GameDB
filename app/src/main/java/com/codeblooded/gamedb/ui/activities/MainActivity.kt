@@ -144,8 +144,12 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.make(drawerLayout, "About this app", Snackbar.LENGTH_SHORT).show()
                     LibsBuilder()
                             //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+                            .withActivityTitle(getString(R.string.about))
+                            .withAboutAppName(getString(R.string.app_name))
                             .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                            //start the activity
+                            .withAboutIconShown(true)
+                            .withAboutVersionShown(true)
+                            .withAboutDescription(getString(R.string.app_description))
                             .start(this@MainActivity)
                 }
             }
