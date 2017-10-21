@@ -64,7 +64,12 @@ class SignupActivity : AppCompatActivity() {
         }
 
         signUpButton.setOnClickListener {
-            signUp(emailEditText.text.toString(),passwordEditText.text.toString())
+            val email = emailEditText.text.toString()
+            val password = passwordEditText.text.toString()
+            if(!(email.trim().equals(" ") && password.trim().equals("")))
+                signUp(emailEditText.text.toString(),passwordEditText.text.toString())
+            else
+                Toast.makeText(this@SignupActivity,"Fill all fields",Toast.LENGTH_SHORT).show()
         }
 
         googleSignInButton.setOnClickListener {

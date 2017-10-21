@@ -1,6 +1,7 @@
 package com.codeblooded.gamedb.ui.fragments
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
@@ -31,14 +32,15 @@ class FavoritesFragment : Fragment(){
 
     lateinit var textview: TextView
     lateinit var recyclerView : RecyclerView
+    lateinit var progressDialog : ProgressDialog
 
     fun updateUI(context: Context, favorites: ArrayList<Game>){
+        progressDialog.cancel()
         val adapter = GameListAdapter(context,favorites)
         Log.e(LOG,"updateUI")
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.adapter = adapter
-
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,7 +48,7 @@ class FavoritesFragment : Fragment(){
         val view = inflater!!.inflate(R.layout.fragment_list, container, false)
 
         textview = view.findViewById(R.id.centerTextView)
-
+        progressDialog = ProgressDialog(context)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
         return view
@@ -55,17 +57,17 @@ class FavoritesFragment : Fragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val task = FavoriteFetchAsyncTask(activity)
+        progressDialog.show()
         task.execute()
     }
 
-    class FavoriteFetchAsyncTask(activity: Activity) : AsyncTask<String,Void,ArrayList<Game>>(){
+    inner class FavoriteFetchAsyncTask(activity: Activity) : AsyncTask<String,Void,ArrayList<Game>>(){
 
         val activity = activity
 
 
         override fun doInBackground(vararg p0: String?): ArrayList<Game> {
             var favorites = ArrayList<Game>()
-
 
             val root = FirebaseDatabase.getInstance().reference
             val uid = FirebaseAuth.getInstance().currentUser?.uid as String
@@ -101,7 +103,7 @@ class FavoritesFragment : Fragment(){
                         favorites.add(game)
                     }
 
-                    FavoritesFragment().updateUI(activity,favorites)
+                    updateUI(activity,favorites)
                     Log.e("DoINBackground", "Data Fetched")
 
                 }

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import com.codeblooded.gamedb.ui.activities.SignupActivity
 import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.FavoritesFragment
@@ -30,8 +31,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var gameListFragment : GameListFragment
     lateinit var collectionListFragment : CollectionListFragment
     lateinit var favoritesFragment : FavoritesFragment
+    var isLoggedIn : Boolean = false
 
     lateinit var pref :SharedPreferences
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        isLoggedIn = (currentUser != null)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,12 +126,20 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.menu_item_games -> {
                     replaceFragment(gameListFragment)
+                    setTitle(R.string.games)
                 }
                 R.id.menu_item_collections -> {
                     replaceFragment(collectionListFragment)
+                    setTitle(R.string.collections)
                 }
                 R.id.menu_item_favorites -> {
-                    replaceFragment(favoritesFragment)
+                    if(isLoggedIn) {
+                        replaceFragment(favoritesFragment)
+                        setTitle(R.string.favorites)
+                    }
+                    else {
+                        Toast.makeText(this@MainActivity, "Sign in First", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 R.id.nav_about -> {
                     Snackbar.make(drawerLayout, "About this app", Snackbar.LENGTH_SHORT).show()
