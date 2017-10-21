@@ -112,5 +112,6 @@
     <string name="no_share_app_found">No app found for sharing</string>
     <string name="check_out">Check out</string>
     <string name="favorites">Favorites</string>
+    <string name="account">Account details</string>
 
 </resources>

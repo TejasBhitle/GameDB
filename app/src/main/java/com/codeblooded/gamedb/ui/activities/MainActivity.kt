@@ -3,13 +3,13 @@ package com.codeblooded.gamedb
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
@@ -20,21 +20,18 @@ import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.FavoritesFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
 import com.google.firebase.auth.FirebaseAuth
-
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    lateinit var fm : FragmentManager
-
-    lateinit var gameListFragment : GameListFragment
-    lateinit var collectionListFragment : CollectionListFragment
-    lateinit var favoritesFragment : FavoritesFragment
-    var isLoggedIn : Boolean = false
-    var isMenuActive : Boolean = true
-
-    lateinit var pref :SharedPreferences
+    lateinit var fm: FragmentManager
+    lateinit var gameListFragment: GameListFragment
+    lateinit var collectionListFragment: CollectionListFragment
+    lateinit var favoritesFragment: FavoritesFragment
+    var isLoggedIn: Boolean = false
+    var isMenuActive: Boolean = true
+    lateinit var pref: SharedPreferences
 
     public override fun onStart() {
         super.onStart()
@@ -75,12 +72,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         fm = supportFragmentManager
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             val ft = fm.beginTransaction() as FragmentTransaction
             ft.add(R.id.frame, gameListFragment)
             ft.commit()
         }
-
 
         setupDrawer()
         navigationView.setCheckedItem(R.id.menu_item_games)
@@ -91,15 +87,14 @@ class MainActivity : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val header = navigationView.getHeaderView(0)
         val textview = header.findViewById<TextView>(R.id.header_textView)
-        if(currentUser != null)
-            textview.text = currentUser.email
+        if (currentUser != null)
+            textview.text = "Signed in as\n" + currentUser.email
         else textview.text = "Sign in"
-
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if(isMenuActive)
+        if (isMenuActive)
             menuInflater.inflate(R.menu.menu, menu)
 
         return true
@@ -109,15 +104,15 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
         when (id) {
             R.id.popular -> {
-                pref.edit().putString(Constants.SORT,Constants.POPULARITY).apply()
+                pref.edit().putString(Constants.SORT, Constants.POPULARITY).apply()
                 gameListFragment.getGames()
             }
-            /*R.id.release_date -> {
-                pref.edit().putString(SORT, FIRST_RELEASE_DATE).apply()
-                gameListFragment.getGames()
-            }*/
+        /*R.id.release_date -> {
+            pref.edit().putString(SORT, FIRST_RELEASE_DATE).apply()
+            gameListFragment.getGames()
+        }*/
             R.id.rating -> {
-                pref.edit().putString(Constants.SORT,Constants.RATING).apply()
+                pref.edit().putString(Constants.SORT, Constants.RATING).apply()
                 gameListFragment.getGames()
             }
         }
@@ -128,19 +123,18 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_item_games -> {
-                    replaceFragment(gameListFragment,true)
+                    replaceFragment(gameListFragment, true)
                     setTitle(R.string.games)
                 }
                 R.id.menu_item_collections -> {
-                    replaceFragment(collectionListFragment,true)
+                    replaceFragment(collectionListFragment, true)
                     setTitle(R.string.collections)
                 }
                 R.id.menu_item_favorites -> {
-                    if(isLoggedIn) {
-                        replaceFragment(favoritesFragment,false)
+                    if (isLoggedIn) {
+                        replaceFragment(favoritesFragment, false)
                         setTitle(R.string.favorites)
-                    }
-                    else {
+                    } else {
                         Toast.makeText(this@MainActivity, "Sign in First", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -154,9 +148,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment, isMenuActive: Boolean){
+    private fun replaceFragment(fragment: Fragment, isMenuActive: Boolean) {
         fm.beginTransaction()
-                .replace(R.id.frame,fragment)
+                .replace(R.id.frame, fragment)
                 .commit()
         this.isMenuActive = isMenuActive
         invalidateOptionsMenu()

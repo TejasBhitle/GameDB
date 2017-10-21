@@ -27,7 +27,14 @@ const val LOG = "DetailActivity"
 
 class DetailActivity : AppCompatActivity() {
     lateinit var game : Game
+    var isLoggedIn: Boolean = false
 
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        isLoggedIn = (currentUser != null)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +45,11 @@ class DetailActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            addToFavorites()
+            if(isLoggedIn)
+                addToFavorites()
+            else
+                Toast.makeText(this@DetailActivity, "Sign in First", Toast.LENGTH_SHORT).show()
+
         }
 
         val description = findViewById<TextView>(R.id.description)

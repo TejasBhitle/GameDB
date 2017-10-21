@@ -43,6 +43,7 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
+        setTitle(R.string.account)
         progressDialog = ProgressDialog(this)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -60,7 +61,12 @@ class SignupActivity : AppCompatActivity() {
         emailTextView = findViewById(R.id.emailTextView)
 
         loginButton.setOnClickListener {
-            login(emailEditText.text.toString(),passwordEditText.text.toString())
+            val email = emailEditText.text.toString()
+            val password = passwordEditText.text.toString()
+            if(!(email.trim().equals(" ") && password.trim().equals("")))
+                login(emailEditText.text.toString(),passwordEditText.text.toString())
+            else
+                Toast.makeText(this@SignupActivity,"Fill all fields",Toast.LENGTH_SHORT).show()
         }
 
         signUpButton.setOnClickListener {
