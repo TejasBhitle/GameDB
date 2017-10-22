@@ -20,6 +20,7 @@ import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
 import com.codeblooded.gamedb.ui.adapters.ScreenshotsAdapter
+import com.codeblooded.gamedb.ui.adapters.VideosAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.content_detail.*
 import me.relex.circleindicator.CircleIndicator
 
 const val LOG = "DetailActivity"
@@ -37,6 +39,8 @@ class DetailActivity : AppCompatActivity() {
     var isFav: Boolean = false
     lateinit var screenshotsAdapter: ScreenshotsAdapter
     lateinit var screenshot_viewPager: ViewPager
+    lateinit var videosAdapter: VideosAdapter
+    lateinit var video_viewPager: ViewPager
 
     public override fun onStart() {
         super.onStart()
@@ -52,6 +56,8 @@ class DetailActivity : AppCompatActivity() {
         val toolbar_collapse = findViewById<View>(R.id.toolbar_collapse) as CollapsingToolbarLayout
 
         screenshot_viewPager = findViewById(R.id.screenshot_viewpager)
+        video_viewPager = findViewById(R.id.video_viewpager)
+
         setSupportActionBar(toolbar)
 
         val fab = findViewById<FloatingActionButton>(R.id.fab) as FloatingActionButton
@@ -142,11 +148,25 @@ class DetailActivity : AppCompatActivity() {
                     .load("https:" + game.bg_url)
                     .into(bg)
 
-            screenshotsAdapter = ScreenshotsAdapter(this, game.screenshots)
-            screenshot_viewPager.adapter = screenshotsAdapter
-            val indicator: CircleIndicator = findViewById(R.id.screenshot_indicator)
-            indicator.setViewPager(screenshot_viewPager)
-            screenshotsAdapter.registerDataSetObserver(indicator.dataSetObserver)
+            if (game.screenshots.length() > 1) {
+                screenshotsAdapter = ScreenshotsAdapter(this, game.screenshots)
+                screenshot_viewPager.adapter = screenshotsAdapter
+                val indicator: CircleIndicator = findViewById(R.id.screenshot_indicator)
+                indicator.setViewPager(screenshot_viewPager)
+                screenshotsAdapter.registerDataSetObserver(indicator.dataSetObserver)
+            } else {
+                screenshot_card.visibility = View.GONE
+            }
+
+            if (game.videos.length() > 0) {
+                videosAdapter = VideosAdapter(this, game.videos)
+                video_viewPager.adapter = videosAdapter
+                val video_indicator: CircleIndicator = findViewById(R.id.video_indicator)
+                video_indicator.setViewPager(video_viewPager)
+                videosAdapter.registerDataSetObserver(video_indicator.dataSetObserver)
+            } else {
+                video_card.visibility = View.GONE
+            }
         }
 
     }
