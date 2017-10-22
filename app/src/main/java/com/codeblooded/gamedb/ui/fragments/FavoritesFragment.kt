@@ -123,6 +123,7 @@ class FavoritesFragment : Fragment() {
             recyclerView.adapter = adapter
         }
         else{
+            recyclerView.removeAllViews()
             textview.text = "No Favorites"
             textview.visibility = View.VISIBLE
         }
