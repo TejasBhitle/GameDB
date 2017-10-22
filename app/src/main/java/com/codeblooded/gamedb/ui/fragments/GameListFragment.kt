@@ -149,7 +149,7 @@ class GameListFragment : Fragment() {
         if (gamesList.size == 0)
             textview.text = getString(R.string.empty_list)
 
-        recyclerView.adapter = GameListAdapter(context, gamesList, search)
+        recyclerView.adapter = GameListAdapter(context, gamesList, search, false)
 
     }
 

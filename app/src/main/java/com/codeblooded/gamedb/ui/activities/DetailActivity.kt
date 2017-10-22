@@ -28,6 +28,7 @@ const val LOG = "DetailActivity"
 class DetailActivity : AppCompatActivity() {
     lateinit var game : Game
     var isLoggedIn: Boolean = false
+    var isFav: Boolean = false
 
     public override fun onStart() {
         super.onStart()
@@ -45,8 +46,16 @@ class DetailActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            if(isLoggedIn)
-                addToFavorites()
+            if(isLoggedIn) {
+                if(!isFav) {
+                    fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_white_24dp))
+                    addToFavorites()
+                }
+                else{
+                    fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_border_white_24dp))
+                    removeFromFavorites()
+                }
+            }
             else
                 Toast.makeText(this@DetailActivity, "Sign in First", Toast.LENGTH_SHORT).show()
 
@@ -63,10 +72,11 @@ class DetailActivity : AppCompatActivity() {
 
         if (intent.extras != null) {
             game = intent.extras.get(Constants.GAME) as Game
+            isFav = intent.extras.getBoolean(Constants.IS_FAV_FRAGMENT)
             Log.e(localClassName, game.name + "\n" + game.description)
             Log.e(localClassName,"https:"+game.img_url)
             Log.e(localClassName,"https:"+game.bg_url)
-
+            Log.e(localClassName,"isFav->"+isFav)
 
             toolbar_collapse.title = game.name
             description.text = game.description
@@ -82,6 +92,10 @@ class DetailActivity : AppCompatActivity() {
                     .load("https:"+game.bg_url)
                     .into(bg)
         }
+
+
+        if(isFav)
+            fab.setImageDrawable( resources.getDrawable(R.drawable.ic_favorite_white_24dp))
     }
 
     fun addToFavorites(){
@@ -107,6 +121,15 @@ class DetailActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    fun removeFromFavorites(){
+        val root = FirebaseDatabase.getInstance().reference
+        val uid = FirebaseAuth.getInstance().currentUser?.uid as String
+        val ref = root.child(uid).child(Constants.FAVORITES).child(game.id.toString())
+        ref.removeValue()
+        Toast.makeText(this@DetailActivity,"Removed from Favorites",Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
