@@ -19,6 +19,7 @@ import com.codeblooded.gamedb.ui.activities.SignupActivity
 import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.FavoritesFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
+import com.codeblooded.gamedb.ui.fragments.GenreListFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.mikepenz.aboutlibraries.Libs
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var gameListFragment: GameListFragment
     lateinit var collectionListFragment: CollectionListFragment
     lateinit var favoritesFragment: FavoritesFragment
+    lateinit var genreListFragment: GenreListFragment
     var isLoggedIn: Boolean = false
     var isMenuActive: Boolean = true
     lateinit var pref: SharedPreferences
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         gameListFragment = GameListFragment.newInstance(false)
         collectionListFragment = CollectionListFragment()
         favoritesFragment = FavoritesFragment()
+        genreListFragment = GenreListFragment()
 
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.drawer_open, R.string.drawer_close)
@@ -155,6 +158,10 @@ class MainActivity : AppCompatActivity() {
                             .withAboutVersionShown(true)
                             .withAboutDescription(getString(R.string.app_description))
                             .start(this@MainActivity)
+                }
+                R.id.menu_item_genre -> {
+                    replaceFragment(genreListFragment, true)
+                    setTitle(R.string.genres)
                 }
             }
             navigationView.setCheckedItem(item.itemId)

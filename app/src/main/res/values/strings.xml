@@ -119,5 +119,6 @@
     <string name="shortcut_small_label">Sign up</string>
     <string name="shortcut_disabled_message">Shortcut Disabled Message</string>
     <string name="shortcut_long_label">Shortcut Long Label</string>
+    <string name="genres">Genres</string>
 
 </resources>
