@@ -25,7 +25,8 @@ class ScreenshotsAdapter(internal val context : Context, internal val jsonArray:
         val view : View = layoutInflator.inflate(R.layout.screenshot_item,container,false)
 
         val imageView: ImageView = view.findViewById(R.id.imageView)
-        val url: String = jsonArray.getJSONObject(position).getString("url")
+        var url: String = jsonArray.getJSONObject(position).getString("url")
+        url = url.replace("t_thumb","t_screenshot_big")
 
         Picasso.with(context)
                 .load("https:"+url)
