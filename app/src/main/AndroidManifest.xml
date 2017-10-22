@@ -33,6 +33,10 @@
         <activity
             android:name=".ui.activities.SearchActivity"
             android:theme="@style/AppTheme.Translucent" />
+
+        <activity android:name=".ui.activities.GenreListActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

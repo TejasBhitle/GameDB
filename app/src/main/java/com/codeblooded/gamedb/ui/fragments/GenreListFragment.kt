@@ -45,7 +45,7 @@ class GenreListFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        recyclerView.layoutManager = GridLayoutManager(context, 1)
 
         pref = context.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 

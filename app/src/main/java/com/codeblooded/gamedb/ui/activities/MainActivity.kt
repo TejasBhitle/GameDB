@@ -57,7 +57,12 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        gameListFragment = GameListFragment.newInstance(false)
+        pref = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+
+        gameListFragment = GameListFragment.newInstance(
+                false,
+                "/games/?fields=*&order=" + pref.getString(Constants.SORT, Constants.POPULARITY)
+        )
         favoritesFragment = FavoritesFragment()
         genreListFragment = GenreListFragment()
 
@@ -67,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
-        pref = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
         if (pref.getBoolean(Constants.FIRST_RUN, true)) {
             val i = Intent(this@MainActivity, IntroActivity::class.java)

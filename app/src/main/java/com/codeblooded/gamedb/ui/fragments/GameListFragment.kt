@@ -40,10 +40,12 @@ class GameListFragment : Fragment() {
     lateinit var pref: SharedPreferences
 
     private var search by FragmentUtility<Boolean>()
+    private var url by FragmentUtility<String>()
 
     companion object {
-        fun newInstance(search: Boolean) = GameListFragment().apply {
+        fun newInstance(search: Boolean, url: String) = GameListFragment().apply {
             this.search = search
+            this.url = url
         }
     }
 
@@ -65,7 +67,7 @@ class GameListFragment : Fragment() {
 
         pref = context.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
-        if (!search) getGames("/games/?fields=*&order=" + pref.getString(Constants.SORT, Constants.POPULARITY))
+        if (!search) getGames(url)
         return view
     }
 
