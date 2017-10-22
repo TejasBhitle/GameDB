@@ -115,4 +115,8 @@
     <string name="sign_into">Sign in to GameDB</string>
     <string name="app_description">Open source application for Game geeks</string>
 
+    <string name="shortcut_small_label">Sign up</string>
+    <string name="shortcut_disabled_message">Shortcut Disabled Message</string>
+    <string name="shortcut_long_label">Shortcut Long Label</string>
+
 </resources>
