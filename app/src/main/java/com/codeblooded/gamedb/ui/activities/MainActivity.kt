@@ -91,21 +91,24 @@ class MainActivity : AppCompatActivity() {
         navigationView.setCheckedItem(R.id.menu_item_games)
         navigationView.getHeaderView(0).setOnClickListener {
             startActivity(Intent(this@MainActivity, SignupActivity::class.java))
+            drawerLayout.closeDrawers()
         }
+        
+    }
 
+    override fun onResume() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val header = navigationView.getHeaderView(0)
         val textview = header.findViewById<TextView>(R.id.header_textView)
         if (currentUser != null)
             textview.text = "Signed in as\n" + currentUser.email
         else textview.text = getText(R.string.sign_into)
-
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (isMenuActive)
             menuInflater.inflate(R.menu.menu, menu)
-
         return true
     }
 
