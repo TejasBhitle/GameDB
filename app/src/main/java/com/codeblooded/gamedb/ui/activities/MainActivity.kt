@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import com.codeblooded.gamedb.ui.activities.SearchActivity
 import com.codeblooded.gamedb.ui.activities.SignupActivity
 import com.codeblooded.gamedb.ui.fragments.FavoritesFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppTheme_Translucent)
         setContentView(R.layout.activity_main)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -93,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, SignupActivity::class.java))
             drawerLayout.closeDrawers()
         }
-        
+
     }
 
     override fun onResume() {
@@ -122,6 +124,9 @@ class MainActivity : AppCompatActivity() {
             R.id.rating -> {
                 pref.edit().putString(Constants.SORT, Constants.RATING).apply()
                 gameListFragment.getGames("/games/?fields=*&order=" + Constants.RATING)
+            }
+            R.id.search -> {
+                startActivity(Intent(this@MainActivity, SearchActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
