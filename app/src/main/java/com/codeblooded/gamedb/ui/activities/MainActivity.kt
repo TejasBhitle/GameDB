@@ -14,9 +14,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toast
 import com.codeblooded.gamedb.ui.activities.SignupActivity
-import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.FavoritesFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
 import com.codeblooded.gamedb.ui.fragments.GenreListFragment
@@ -31,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     lateinit var fm: FragmentManager
     lateinit var gameListFragment: GameListFragment
-    lateinit var collectionListFragment: CollectionListFragment
     lateinit var favoritesFragment: FavoritesFragment
     lateinit var genreListFragment: GenreListFragment
     var isLoggedIn: Boolean = false
@@ -61,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         gameListFragment = GameListFragment.newInstance(false)
-        collectionListFragment = CollectionListFragment()
         favoritesFragment = FavoritesFragment()
         genreListFragment = GenreListFragment()
 
@@ -140,11 +136,13 @@ class MainActivity : AppCompatActivity() {
                         replaceFragment(favoritesFragment, false)
                         setTitle(R.string.favorites)
                     } else {
-                        Toast.makeText(this@MainActivity, "Sign in First", Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(drawerLayout, "Please sign in first", Snackbar.LENGTH_SHORT)
+                        snackbar.view.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+                        snackbar.setActionTextColor(255)
+                        snackbar.show()
                     }
                 }
                 R.id.nav_about -> {
-                    Snackbar.make(drawerLayout, "About this app", Snackbar.LENGTH_SHORT).show()
                     LibsBuilder()
                             //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
                             .withActivityTitle(getString(R.string.about))
