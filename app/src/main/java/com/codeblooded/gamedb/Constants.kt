@@ -14,7 +14,9 @@ class Constants {
         const val FIRST_RELEASE_DATE = "first_release_date:desc"
         const val RATING = "rating:desc&filter[rating_count][gt]=100"
 
-        const val ID : String  = "ID";
+        const val IS_FAV_FRAGMENT="IS_FAV_FRAGMENT"
+
+        const val ID : String  = "ID"
         const val NAME: String = "NAME"
         const val DESCRIPTION: String = "DESCRIPTION"
         const val URL: String = "URL"

@@ -117,7 +117,7 @@ class FavoritesFragment : Fragment() {
         Log.e(LOG, "updateUI")
         if(favorites.size != 0) {
             textview.visibility = View.GONE
-            val adapter = GameListAdapter(context, favorites)
+            val adapter = GameListAdapter(context, favorites, true)
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = GridLayoutManager(context, 2)
             recyclerView.adapter = adapter

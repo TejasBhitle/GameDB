@@ -23,7 +23,7 @@ import java.util.*
 /**
  * Created by tejas on 8/5/17.
  */
-class GameListAdapter(internal var context: Context, internal var games: ArrayList<Game>)
+class GameListAdapter(internal var context: Context, internal var games: ArrayList<Game>, val isFav: Boolean)
     : RecyclerView.Adapter<GameListAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -55,6 +55,7 @@ class GameListAdapter(internal var context: Context, internal var games: ArrayLi
                 val p = Pair.create(view, "cover")
                 bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, p).toBundle()
             }
+            intent.putExtra(Constants.IS_FAV_FRAGMENT,isFav)
             intent.putExtra(Constants.GAME, game)
             context.startActivity(intent, bundle)
 
