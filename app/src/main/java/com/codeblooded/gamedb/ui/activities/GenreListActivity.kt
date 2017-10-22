@@ -65,8 +65,8 @@ class GenreListActivity : AppCompatActivity() {
                     progressDialog.cancel()
                     val genreObj : JSONObject  = response!!.get(0) as JSONObject
                     val gamesArr : JSONArray = genreObj.getJSONArray("games")
-                    val len = if(gamesArr.length() < 10) gamesArr.length() else 10
-                    var gameIds : String = "/games/"
+                    val len = if (gamesArr.length() < 20) gamesArr.length() else 19
+                    var gameIds = "/games/"
                     for(i in 0..(len)){
                         gameIds += gamesArr.get(i).toString()+","
                     }

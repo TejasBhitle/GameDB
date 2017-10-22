@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Genre
@@ -49,7 +48,7 @@ class GenreListFragment : Fragment() {
 
         pref = context.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
-        getGenres("/genres/")//?fields=id,name,url&count=10")
+        getGenres("/genres/")
         return view
     }
 
@@ -60,12 +59,11 @@ class GenreListFragment : Fragment() {
         if(RestClient.isNetworkConnected(context)) {
 
             progressDialog = ProgressDialog(context)
-            progressDialog.setMessage("Fetching Genres")
+            progressDialog.setMessage(getString(R.string.please_wait))
             progressDialog.show()
 
             val params = RequestParams()
             params.put("fields","id,name,url")
-            params.put("count","10")
 
             RestClient.addHeaders()
             RestClient.get(baseUrl, params, object : JsonHttpResponseHandler() {
@@ -75,14 +73,12 @@ class GenreListFragment : Fragment() {
                     Log.e("Response:-> ",response.toString())
                     progressDialog.cancel()
                     updateUI(response)
-
                 }
 
             })
         }
         else{
-            Toast.makeText(context,"No network", Toast.LENGTH_SHORT).show()
-            textview.text = "No Genres"
+            textview.text = "No network"
         }
 
     }

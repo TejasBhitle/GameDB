@@ -1,9 +1,12 @@
 package com.codeblooded.gamedb.ui.activities
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
@@ -12,28 +15,28 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_detail.*
-import android.widget.Toast
-import android.content.Intent
-import android.support.v4.view.ViewPager
-import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.ui.adapters.ScreenshotsAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_detail.*
 import me.relex.circleindicator.CircleIndicator
 
 const val LOG = "DetailActivity"
 
 class DetailActivity : AppCompatActivity() {
-    lateinit var game : Game
+    lateinit var game: Game
     var isLoggedIn: Boolean = false
     var isFav: Boolean = false
-    lateinit var screenshotsAdapter : ScreenshotsAdapter
-    lateinit var viewPager: ViewPager
+    lateinit var screenshotsAdapter: ScreenshotsAdapter
+    lateinit var screenshot_viewPager: ViewPager
 
     public override fun onStart() {
         super.onStart()
@@ -48,24 +51,28 @@ class DetailActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         val toolbar_collapse = findViewById<View>(R.id.toolbar_collapse) as CollapsingToolbarLayout
 
-        viewPager = findViewById(R.id.viewpager)
+        screenshot_viewPager = findViewById(R.id.screenshot_viewpager)
         setSupportActionBar(toolbar)
 
         val fab = findViewById<FloatingActionButton>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            if(isLoggedIn) {
-                if(!isFav) {
+            if (isLoggedIn) {
+                if (!isFav) {
                     fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_white_24dp))
                     addToFavorites()
-                }
-                else{
+                } else {
                     fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_border_white_24dp))
                     removeFromFavorites()
                 }
+            } else {
+                val snackbar = Snackbar.make(rootview, "Please sign in first", Snackbar.LENGTH_SHORT)
+                snackbar.view.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+                snackbar.setActionTextColor(Color.WHITE)
+                snackbar.setAction(R.string.sign_in, {
+                    startActivity(Intent(this@DetailActivity, SignupActivity::class.java))
+                })
+                snackbar.show()
             }
-            else
-                Toast.makeText(this@DetailActivity, "Sign in First", Toast.LENGTH_SHORT).show()
-
         }
 
         val description = findViewById<TextView>(R.id.description)
@@ -79,11 +86,31 @@ class DetailActivity : AppCompatActivity() {
 
         if (intent.extras != null) {
             game = intent.extras.get(Constants.GAME) as Game
-            isFav = intent.extras.getBoolean(Constants.IS_FAV_FRAGMENT)
+            val root = FirebaseDatabase.getInstance().reference
+            val uid = FirebaseAuth.getInstance().currentUser?.uid as String
+            val ref = root.child(uid).child(Constants.FAVORITES).child(game.id.toString())
+
+            val listener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    isFav = dataSnapshot.child(uid).child(Constants.FAVORITES).child(game.id.toString()).exists()
+                    if (isLoggedIn) {
+                        if (isFav) {
+                            fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_white_24dp))
+                        } else {
+                            fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_border_white_24dp))
+                        }
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+            }
+            root.addListenerForSingleValueEvent(listener)
+
             Log.e(localClassName, game.name + "\n" + game.description)
-            Log.e(localClassName,"https:"+game.img_url)
-            Log.e(localClassName,"https:"+game.bg_url)
-            Log.e(localClassName,"isFav->"+isFav)
+            Log.e(localClassName, "https:" + game.img_url)
+            Log.e(localClassName, "https:" + game.bg_url)
 
             toolbar_collapse.title = game.name
             description.text = game.description
@@ -95,39 +122,37 @@ class DetailActivity : AppCompatActivity() {
             var criticRating: String = game.critic_rating
 
             val critic_decimal_index = game.critic_rating.indexOf(".")
-            if(criticRating.length > critic_decimal_index+2)
-                criticRating = criticRating.substring(0,critic_decimal_index+2)
+            if (criticRating.length > critic_decimal_index + 2)
+                criticRating = criticRating.substring(0, critic_decimal_index + 2)
 
 
             val user_decimal_index = game.user_rating.indexOf(".")
-            if(userRating.length > user_decimal_index+2)
-                userRating = userRating.substring(0,user_decimal_index+2)
+            if (userRating.length > user_decimal_index + 2)
+                userRating = userRating.substring(0, user_decimal_index + 2)
 
             user_rating.text = userRating
             critic_rating.text = criticRating
 
             Picasso.with(this)
-                    .load("https:"+game.img_url)
+                    .load("https:" + game.img_url)
                     .placeholder(R.drawable.ic_image_grey_24dp)
                     .error(R.drawable.ic_image_grey_24dp)
                     .into(image)
             Picasso.with(this)
-                    .load("https:"+game.bg_url)
+                    .load("https:" + game.bg_url)
                     .into(bg)
 
-            screenshotsAdapter = ScreenshotsAdapter(this,game.screenshots)
-            viewPager.adapter = screenshotsAdapter
-            val indicator : CircleIndicator = findViewById(R.id.indicator)
-            indicator.setViewPager(viewPager)
-            screenshotsAdapter.registerDataSetObserver(indicator.getDataSetObserver())
+            screenshotsAdapter = ScreenshotsAdapter(this, game.screenshots)
+            screenshot_viewPager.adapter = screenshotsAdapter
+            val indicator: CircleIndicator = findViewById(R.id.screenshot_indicator)
+            indicator.setViewPager(screenshot_viewPager)
+            screenshotsAdapter.registerDataSetObserver(indicator.dataSetObserver)
         }
 
-
-        if(isFav)
-            fab.setImageDrawable( resources.getDrawable(R.drawable.ic_favorite_white_24dp))
     }
 
-    fun addToFavorites(){
+    fun addToFavorites() {
+        isFav = true
 
         val root = FirebaseDatabase.getInstance().reference
         val uid = FirebaseAuth.getInstance().currentUser?.uid as String
@@ -137,28 +162,34 @@ class DetailActivity : AppCompatActivity() {
 
         val hashMap = game.getHashMap()
 
-        val updateMap = HashMap<String,Any>()
-        updateMap.put(pushKey,hashMap)
+        val updateMap = HashMap<String, Any>()
+        updateMap.put(pushKey, hashMap)
 
-        ref.updateChildren(updateMap, DatabaseReference.CompletionListener {
-            databaseError, databaseReference ->
+        ref.updateChildren(updateMap, { databaseError, databaseReference ->
 
-            if(databaseError != null)
-                Log.e(LOG,databaseError.message)
-            else
-                Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT).show()
+            if (databaseError != null)
+                Log.e(LOG, databaseError.message)
+            else {
+                val snackbar = Snackbar.make(rootview, "Added to Favorites", Snackbar.LENGTH_SHORT)
+                snackbar.view.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+                snackbar.setActionTextColor(Color.WHITE)
+                snackbar.show()
+            }
 
         })
 
     }
 
-    fun removeFromFavorites(){
+    fun removeFromFavorites() {
+        isFav = false
         val root = FirebaseDatabase.getInstance().reference
         val uid = FirebaseAuth.getInstance().currentUser?.uid as String
         val ref = root.child(uid).child(Constants.FAVORITES).child(game.id.toString())
         ref.removeValue()
-        Toast.makeText(this@DetailActivity,"Removed from Favorites",Toast.LENGTH_SHORT).show()
-        finish()
+        val snackbar = Snackbar.make(rootview, "Removed from Favorites", Snackbar.LENGTH_SHORT)
+        snackbar.view.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+        snackbar.setActionTextColor(Color.WHITE)
+        snackbar.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

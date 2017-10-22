@@ -3,6 +3,7 @@ package com.codeblooded.gamedb
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -150,7 +151,10 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         val snackbar = Snackbar.make(drawerLayout, "Please sign in first", Snackbar.LENGTH_SHORT)
                         snackbar.view.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-                        snackbar.setActionTextColor(255)
+                        snackbar.setActionTextColor(Color.WHITE)
+                        snackbar.setAction(R.string.sign_in, {
+                            startActivity(Intent(this@MainActivity, SignupActivity::class.java))
+                        })
                         snackbar.show()
                     }
                 }

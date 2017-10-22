@@ -13,13 +13,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
 import com.codeblooded.gamedb.ui.activities.LOG
 import com.codeblooded.gamedb.ui.adapters.GameListAdapter
-import com.codeblooded.gamedb.util.RestClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -80,8 +78,8 @@ class FavoritesFragment : Fragment() {
                         val description = snapshot.child(Constants.DESCRIPTION).value as String
                         val url = snapshot.child(Constants.URL).value as String
                         val storyline = snapshot.child(Constants.STORYLINE).value as String
-                        val userRating = snapshot.child(Constants.USER_RATING).value.toString() as String
-                        val criticRating = snapshot.child(Constants.CRITIC_RATING).value.toString() as String
+                        val userRating = snapshot.child(Constants.USER_RATING).value.toString()
+                        val criticRating = snapshot.child(Constants.CRITIC_RATING).value.toString()
                         val imgUrl = snapshot.child(Constants.IMG_URL).value as String
                         val bgUrl = snapshot.child(Constants.BG_URL).value as String
                         val releaseDate = snapshot.child(Constants.RELEASE_DATE).value as String
@@ -120,7 +118,7 @@ class FavoritesFragment : Fragment() {
         Log.e(LOG, "updateUI")
         if(favorites.size != 0) {
             textview.visibility = View.GONE
-            val adapter = GameListAdapter(context, favorites, false, true)
+            val adapter = GameListAdapter(context, favorites, false)
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = GridLayoutManager(context, 2)
             recyclerView.adapter = adapter

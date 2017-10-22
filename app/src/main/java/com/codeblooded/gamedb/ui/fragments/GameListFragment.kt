@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
@@ -93,10 +92,8 @@ class GameListFragment : Fragment() {
                 }
 
             })
-        }
-        else{
-            Toast.makeText(context,"No network",Toast.LENGTH_SHORT).show()
-            textview.text = "No games"
+        } else {
+            textview.text = "No network"
         }
 
     }
@@ -162,7 +159,7 @@ class GameListFragment : Fragment() {
             else
                 textview.text = getString(R.string.empty_list)
 
-        recyclerView.adapter = GameListAdapter(context, gamesList, search, false)
+        recyclerView.adapter = GameListAdapter(context, gamesList, search)
 
     }
 
