@@ -35,7 +35,7 @@ class GameListAdapter(internal var context: Context, internal var games: ArrayLi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        if (list) return ViewHolder(LayoutInflater.from(context).inflate(R.layout.grid_item_game, parent, false))
+        if (list) return ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_game, parent, false))
         else return ViewHolder(LayoutInflater.from(context).inflate(R.layout.grid_item_game, parent, false))
     }
 
@@ -52,8 +52,8 @@ class GameListAdapter(internal var context: Context, internal var games: ArrayLi
             val intent = Intent(context, DetailActivity::class.java)
             var bundle: Bundle? = null
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                view.transitionName = "cover"
-                val p = Pair.create(view, "cover")
+                holder.image.transitionName = "cover"
+                val p = Pair.create(holder.image as View, "cover")
                 bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, p).toBundle()
             }
             intent.putExtra(Constants.IS_FAV_FRAGMENT,isFav)

@@ -29,8 +29,16 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.activities.SearchActivity"
-            android:theme="@style/AppTheme.Translucent" />
-
+            android:label="@string/search_hint"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity android:name=".ui.activities.GenreListActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />

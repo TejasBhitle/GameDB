@@ -76,7 +76,7 @@ class GameListFragment : Fragment() {
         if(RestClient.isNetworkConnected(context)) {
 
             progressDialog = ProgressDialog(context)
-            progressDialog.setMessage("Fetching Games")
+            progressDialog.setMessage(getString(R.string.please_wait))
             progressDialog.show()
 
             RestClient.addHeaders()
@@ -152,7 +152,10 @@ class GameListFragment : Fragment() {
         }
         progressDialog.cancel()
         if (gamesList.size == 0)
-            textview.text = getString(R.string.empty_list)
+            if (search)
+                textview.text = getString(R.string.no_search_results)
+            else
+                textview.text = getString(R.string.empty_list)
 
         recyclerView.adapter = GameListAdapter(context, gamesList, search, false)
 
