@@ -1,6 +1,8 @@
 package com.codeblooded.gamedb
 
+import android.content.Intent
 import android.os.Bundle
+import com.codeblooded.gamedb.ui.activities.SignupActivity
 
 import com.heinrichreimersoftware.materialintro.slide.SimpleSlide
 
@@ -12,13 +14,13 @@ class IntroActivity : com.heinrichreimersoftware.materialintro.app.IntroActivity
         super.onCreate(savedInstanceState)
 
         /* Enable/disable skip button */
-        setButtonBackVisible(true)
-        setButtonBackFunction(BUTTON_BACK_FUNCTION_SKIP)
+        isButtonBackVisible = true
+        buttonBackFunction = BUTTON_BACK_FUNCTION_SKIP
 
         /* Enable/disable finish button */
-        setFinishEnabled(true)
-        setButtonNextVisible(true)
-        setButtonNextFunction(BUTTON_NEXT_FUNCTION_NEXT_FINISH)
+        isFinishEnabled = true
+        isButtonNextVisible = true
+        buttonNextFunction = BUTTON_NEXT_FUNCTION_NEXT_FINISH
 
 
         addSlide(SimpleSlide.Builder()
@@ -31,16 +33,20 @@ class IntroActivity : com.heinrichreimersoftware.materialintro.app.IntroActivity
 
         addSlide(SimpleSlide.Builder()
                 .description(R.string.intro1)
-                .image(R.mipmap.ic_launcher)
+                .image(R.drawable.ic_videogame_asset_black_24dp)
                 .background(R.color.colorPrimary)
                 .backgroundDark(R.color.colorPrimaryDark)
                 .build())
 
         addSlide(SimpleSlide.Builder()
-                .description("You can launch this intro again from the About page")
-                .image(R.mipmap.ic_launcher)
+                .description(R.string.sign_in_description)
+                .image(R.drawable.ic_favorite_white_24dp)
                 .background(R.color.colorPrimary)
                 .backgroundDark(R.color.colorPrimaryDark)
+                .buttonCtaLabel(R.string.sign_in)
+                .buttonCtaClickListener {
+                    startActivity(Intent(this@IntroActivity, SignupActivity::class.java))
+                }
                 .build())
 
     }
