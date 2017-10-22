@@ -49,7 +49,7 @@ class GenreListFragment : Fragment() {
 
         pref = context.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
-         getGenres("genres/")//?fields=id,name,url&count=10")
+        getGenres("/genres/")//?fields=id,name,url&count=10")
         return view
     }
 
