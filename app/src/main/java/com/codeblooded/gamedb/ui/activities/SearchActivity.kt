@@ -26,7 +26,7 @@ class SearchActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        gameListFragment = GameListFragment.newInstance(true)
+        gameListFragment = GameListFragment.newInstance(true,"")
 
         pref = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
