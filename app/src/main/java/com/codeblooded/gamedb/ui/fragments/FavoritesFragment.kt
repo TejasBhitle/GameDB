@@ -45,14 +45,10 @@ class FavoritesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //if(RestClient.isNetworkConnected(activity)) {
-            val task = FavoriteFetchAsyncTask(activity)
-            progressDialog.show()
-            task.execute()
-        //}
-        /*else{
-            Toast.makeText(context,"No network",Toast.LENGTH_SHORT).show()
-        }*/
+        val task = FavoriteFetchAsyncTask(activity)
+        progressDialog.setMessage(getString(R.string.please_wait))
+        progressDialog.show()
+        task.execute()
     }
 
     inner class FavoriteFetchAsyncTask(activity: Activity) : AsyncTask<String, Void, ArrayList<Game>>() {

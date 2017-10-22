@@ -1,6 +1,8 @@
 package com.codeblooded.gamedb.ui.activities
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
@@ -8,6 +10,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.graphics.Palette
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
@@ -17,6 +20,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.animation.GlideAnimation
+import com.bumptech.glide.request.target.SimpleTarget
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
@@ -47,6 +52,28 @@ class DetailActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = FirebaseAuth.getInstance().currentUser
         isLoggedIn = (currentUser != null)
+        if (isLoggedIn) {
+            val root = FirebaseDatabase.getInstance().reference
+            val uid = FirebaseAuth.getInstance().currentUser?.uid as String
+            val ref = root.child(uid).child(Constants.FAVORITES).child(game.id.toString())
+
+            val listener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    isFav = dataSnapshot.child(uid).child(Constants.FAVORITES).child(game.id.toString()).exists()
+
+                    if (isFav) {
+                        fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_white_24dp))
+                    } else {
+                        fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_border_white_24dp))
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+            }
+            root.addListenerForSingleValueEvent(listener)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,28 +119,6 @@ class DetailActivity : AppCompatActivity() {
 
         if (intent.extras != null) {
             game = intent.extras.get(Constants.GAME) as Game
-            if (isLoggedIn) {
-                val root = FirebaseDatabase.getInstance().reference
-                val uid = FirebaseAuth.getInstance().currentUser?.uid as String
-                val ref = root.child(uid).child(Constants.FAVORITES).child(game.id.toString())
-
-                val listener = object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        isFav = dataSnapshot.child(uid).child(Constants.FAVORITES).child(game.id.toString()).exists()
-
-                        if (isFav) {
-                            fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_white_24dp))
-                        } else {
-                            fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_border_white_24dp))
-                        }
-                    }
-
-                    override fun onCancelled(databaseError: DatabaseError) {
-
-                    }
-                }
-                root.addListenerForSingleValueEvent(listener)
-            }
 
             Log.e(localClassName, game.name + "\n" + game.description)
             Log.e(localClassName, "https:" + game.img_url)
@@ -154,6 +159,22 @@ class DetailActivity : AppCompatActivity() {
                     .placeholder(R.drawable.ic_image_grey_24dp)
                     .error(R.drawable.ic_image_grey_24dp)
                     .into(bg)
+
+            Glide.with(this)
+                    .load("https:" + game.bg_url)
+                    .asBitmap()
+                    .into(object : SimpleTarget<Bitmap>(889, 500) {
+                        override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
+                            var palette = Palette.from(resource).generate()
+                            toolbar_collapse.setContentScrimColor(palette.getDarkVibrantColor(palette.getMutedColor(resources.getColor(R.color.colorPrimary))))
+                            toolbar_collapse.setBackgroundColor(palette.getDarkVibrantColor(palette.getMutedColor(resources.getColor(R.color.colorPrimary))))
+                            toolbar_collapse.setStatusBarScrimColor(palette.getDarkVibrantColor(palette.getMutedColor(resources.getColor(R.color.colorPrimary))))
+
+                            fab.backgroundTintList = ColorStateList.valueOf(palette.getVibrantColor(palette.getLightVibrantColor(palette.getDarkVibrantColor(palette.getLightMutedColor(resources.getColor(R.color.colorPrimary))))))
+                            fab.rippleColor = palette.getDarkMutedColor(palette.getMutedColor(resources.getColor(R.color.colorPrimary)))
+
+                        }
+                    })
 
             if (game.screenshots.length() > 1) {
                 screenshotsAdapter = ScreenshotsAdapter(this, game.screenshots)
