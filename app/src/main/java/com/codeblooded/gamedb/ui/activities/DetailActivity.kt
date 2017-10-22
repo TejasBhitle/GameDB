@@ -92,27 +92,28 @@ class DetailActivity : AppCompatActivity() {
 
         if (intent.extras != null) {
             game = intent.extras.get(Constants.GAME) as Game
-            val root = FirebaseDatabase.getInstance().reference
-            val uid = FirebaseAuth.getInstance().currentUser?.uid as String
-            val ref = root.child(uid).child(Constants.FAVORITES).child(game.id.toString())
+            if (isLoggedIn) {
+                val root = FirebaseDatabase.getInstance().reference
+                val uid = FirebaseAuth.getInstance().currentUser?.uid as String
+                val ref = root.child(uid).child(Constants.FAVORITES).child(game.id.toString())
 
-            val listener = object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    isFav = dataSnapshot.child(uid).child(Constants.FAVORITES).child(game.id.toString()).exists()
-                    if (isLoggedIn) {
+                val listener = object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        isFav = dataSnapshot.child(uid).child(Constants.FAVORITES).child(game.id.toString()).exists()
+
                         if (isFav) {
                             fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_white_24dp))
                         } else {
                             fab.setImageDrawable(resources.getDrawable(R.drawable.ic_favorite_border_white_24dp))
                         }
                     }
-                }
 
-                override fun onCancelled(databaseError: DatabaseError) {
+                    override fun onCancelled(databaseError: DatabaseError) {
 
+                    }
                 }
+                root.addListenerForSingleValueEvent(listener)
             }
-            root.addListenerForSingleValueEvent(listener)
 
             Log.e(localClassName, game.name + "\n" + game.description)
             Log.e(localClassName, "https:" + game.img_url)
