@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,8 @@ class GameListFragment : Fragment() {
     private var search by FragmentUtility<Boolean>()
     private var url by FragmentUtility<String>()
 
+    val LOG = "GameListFragment"
+
     companion object {
         fun newInstance(search: Boolean, url: String) = GameListFragment().apply {
             this.search = search
@@ -73,6 +76,7 @@ class GameListFragment : Fragment() {
 
     fun getGames(baseUrl: String) {
 
+        Log.e(LOG,"---------->"+baseUrl)
         if(RestClient.isNetworkConnected(context)) {
 
             progressDialog = ProgressDialog(context)
@@ -84,6 +88,7 @@ class GameListFragment : Fragment() {
 
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONArray?) {
                     super.onSuccess(statusCode, headers, response)
+                    Log.e(LOG,response.toString())
                     updateUI(response)
                 }
 

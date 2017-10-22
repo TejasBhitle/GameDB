@@ -18,10 +18,13 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import android.widget.Toast
 import android.content.Intent
+import android.support.v4.view.ViewPager
 import com.codeblooded.gamedb.Constants
+import com.codeblooded.gamedb.ui.adapters.ScreenshotsAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import me.relex.circleindicator.CircleIndicator
 
 const val LOG = "DetailActivity"
 
@@ -29,6 +32,8 @@ class DetailActivity : AppCompatActivity() {
     lateinit var game : Game
     var isLoggedIn: Boolean = false
     var isFav: Boolean = false
+    lateinit var screenshotsAdapter : ScreenshotsAdapter
+    lateinit var viewPager: ViewPager
 
     public override fun onStart() {
         super.onStart()
@@ -42,6 +47,8 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         val toolbar_collapse = findViewById<View>(R.id.toolbar_collapse) as CollapsingToolbarLayout
+
+        viewPager = findViewById(R.id.viewpager)
         setSupportActionBar(toolbar)
 
         val fab = findViewById<FloatingActionButton>(R.id.fab) as FloatingActionButton
@@ -107,6 +114,12 @@ class DetailActivity : AppCompatActivity() {
             Picasso.with(this)
                     .load("https:"+game.bg_url)
                     .into(bg)
+
+            screenshotsAdapter = ScreenshotsAdapter(this,game.screenshots)
+            viewPager.adapter = screenshotsAdapter
+            val indicator : CircleIndicator = findViewById(R.id.indicator)
+            indicator.setViewPager(viewPager)
+            screenshotsAdapter.registerDataSetObserver(indicator.getDataSetObserver())
         }
 
 

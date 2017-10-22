@@ -121,5 +121,6 @@
     <string name="shortcut_long_label">Shortcut Long Label</string>
     <string name="sign_in_description">Signing in lets you add games to your favorites list and synchronise your favorites with the cloud</string>
     <string name="genres">Genres</string>
+    <string name="screenshots">Screenshots</string>
 
 </resources>
