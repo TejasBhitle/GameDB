@@ -83,8 +83,22 @@ class DetailActivity : AppCompatActivity() {
             if (game.release_date != "") release_date.text = game.release_date
             //if (game.user_rating != "") user_rating.text = String.format("%.2f", game.user_rating)
             //if (game.critic_rating != "") critic_rating.text = String.format("%.2f", game.critic_rating)
-            user_rating.text = game.user_rating
-            critic_rating.text = game.critic_rating
+
+            var userRating: String = game.user_rating
+            var criticRating: String = game.critic_rating
+
+            val critic_decimal_index = game.critic_rating.indexOf(".")
+            if(criticRating.length > critic_decimal_index+2)
+                criticRating = criticRating.substring(0,critic_decimal_index+2)
+
+
+            val user_decimal_index = game.user_rating.indexOf(".")
+            if(userRating.length > user_decimal_index+2)
+                userRating = userRating.substring(0,user_decimal_index+2)
+
+            user_rating.text = userRating
+            critic_rating.text = criticRating
+
             Picasso.with(this)
                     .load("https:"+game.img_url)
                     .placeholder(R.drawable.ic_image_grey_24dp)

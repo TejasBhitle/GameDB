@@ -89,6 +89,7 @@ class GameListFragment : Fragment() {
         }
         else{
             Toast.makeText(context,"No network",Toast.LENGTH_SHORT).show()
+            textview.text = "No games"
         }
 
     }
