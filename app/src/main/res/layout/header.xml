@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/header_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/header_parent"
     android:layout_width="match_parent"
     android:layout_height="170dp"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/banner"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/header_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign in"
-        android:textSize="18sp"
-        android:padding="20dp"
         android:layout_alignParentBottom="true"
         android:lineSpacingExtra="5dp"
-        android:textColor="@android:color/white"/>
+        android:padding="20dp"
+        android:text="@string/sign_into"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
 </RelativeLayout>

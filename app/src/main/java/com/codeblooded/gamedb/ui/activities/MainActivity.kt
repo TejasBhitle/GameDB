@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         val textview = header.findViewById<TextView>(R.id.header_textView)
         if (currentUser != null)
             textview.text = "Signed in as\n" + currentUser.email
-        else textview.text = "Sign in"
+        else textview.text = getText(R.string.sign_into)
 
     }
 
@@ -134,10 +134,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_item_games -> {
                     replaceFragment(gameListFragment, true)
                     setTitle(R.string.games)
-                }
-                R.id.menu_item_collections -> {
-                    replaceFragment(collectionListFragment, true)
-                    setTitle(R.string.collections)
                 }
                 R.id.menu_item_favorites -> {
                     if (isLoggedIn) {

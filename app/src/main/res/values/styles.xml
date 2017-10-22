@@ -9,6 +9,7 @@
     </style>
 
     <style name="AppTheme.Translucent" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

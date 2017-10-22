@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import com.codeblooded.gamedb.OnSignUpCompleteListener
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.util.AuthHandler
@@ -28,8 +31,8 @@ class SignupActivity : AppCompatActivity() {
     lateinit var signUpButton: Button
     lateinit var emailTextView: TextView
     lateinit var progressDialog: ProgressDialog
-    lateinit var loggedInView: LinearLayout
-    lateinit var loggedOutView: LinearLayout
+    lateinit var loggedInView: View
+    lateinit var loggedOutView: View
     var isLoggedIn: Boolean = false
     val TAG = "SignUpActivity"
     lateinit var firebaseAuth: FirebaseAuth
