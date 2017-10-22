@@ -6,14 +6,16 @@
         android:checkableBehavior="single">
 
         <item android:id="@+id/menu_item_games"
-            android:title="@string/games"/>
+            android:title="@string/games"
+            android:icon="@drawable/ic_videogame_asset_black_24dp"/>
 
         <item android:id="@+id/menu_item_collections"
             android:title="@string/collections"/>
 
 
         <item android:id="@+id/menu_item_favorites"
-            android:title="@string/favorites"/>
+            android:title="@string/favorites"
+            android:icon="@drawable/ic_favorite_border_white_24dp"/>
 
 
     </group>
