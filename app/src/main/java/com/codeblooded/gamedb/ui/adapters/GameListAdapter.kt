@@ -23,7 +23,7 @@ import java.util.*
 /**
  * Created by tejas on 8/5/17.
  */
-class GameListAdapter(internal var context: Context, internal var games: ArrayList<Game>)
+class GameListAdapter(internal var context: Context, internal var games: ArrayList<Game>, internal var list: Boolean)
     : RecyclerView.Adapter<GameListAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -35,7 +35,8 @@ class GameListAdapter(internal var context: Context, internal var games: ArrayLi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_game, parent, false))
+        if (list) return ViewHolder(LayoutInflater.from(context).inflate(R.layout.grid_item_game, parent, false))
+        else return ViewHolder(LayoutInflater.from(context).inflate(R.layout.grid_item_game, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {

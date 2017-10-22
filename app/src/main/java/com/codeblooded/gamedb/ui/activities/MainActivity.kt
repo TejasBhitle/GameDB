@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        gameListFragment = GameListFragment()
+        gameListFragment = GameListFragment.newInstance(false)
         collectionListFragment = CollectionListFragment()
         favoritesFragment = FavoritesFragment()
 
@@ -107,15 +107,11 @@ class MainActivity : AppCompatActivity() {
         when (id) {
             R.id.popular -> {
                 pref.edit().putString(Constants.SORT, Constants.POPULARITY).apply()
-                gameListFragment.getGames()
+                gameListFragment.getGames("/games/?fields=*&order=" + Constants.POPULARITY)
             }
-        /*R.id.release_date -> {
-            pref.edit().putString(SORT, FIRST_RELEASE_DATE).apply()
-            gameListFragment.getGames()
-        }*/
             R.id.rating -> {
                 pref.edit().putString(Constants.SORT, Constants.RATING).apply()
-                gameListFragment.getGames()
+                gameListFragment.getGames("/games/?fields=*&order=" + Constants.RATING)
             }
         }
         return super.onOptionsItemSelected(item)

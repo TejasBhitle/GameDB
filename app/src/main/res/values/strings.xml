@@ -114,5 +114,6 @@
     <string name="favorites">Favorites</string>
     <string name="sign_into">Sign in to GameDB</string>
     <string name="app_description">Open source application for Game geeks</string>
+    <string name="search_hint">Search games</string>
 
 </resources>

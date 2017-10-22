@@ -22,10 +22,11 @@
         <activity
             android:name=".ui.activities.DetailActivity"
             android:theme="@style/AppTheme.Translucent" />
-
-        <activity android:name=".ui.activities.SignupActivity"
+        <activity
+            android:name=".ui.activities.SignupActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.activities.SearchActivity"></activity>
     </application>
 
 </manifest>

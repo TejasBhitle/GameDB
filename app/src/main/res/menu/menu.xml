@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/search_hint"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/sort_mode"
@@ -11,10 +18,6 @@
             <item
                 android:id="@+id/rating"
                 android:title="@string/rating"/>
-            <!-- Hide this because sorting by latest releases always gives incomplete game data
-            <item
-                android:id="@+id/release_date"
-                android:title="@string/release_date" />-->
         </menu>
     </item>
 
