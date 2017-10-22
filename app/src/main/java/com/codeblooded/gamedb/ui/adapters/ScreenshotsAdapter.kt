@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
 import com.codeblooded.gamedb.R
-import com.squareup.picasso.Picasso
 import org.json.JSONArray
 
 /**
@@ -28,8 +28,10 @@ class ScreenshotsAdapter(internal val context : Context, internal val jsonArray:
         var url: String = jsonArray.getJSONObject(position + 1).getString("url")
         url = url.replace("t_thumb","t_screenshot_big")
 
-        Picasso.with(context)
+        Glide.with(context)
                 .load("https:"+url)
+                .crossFade()
+                .dontTransform()
                 .placeholder(R.drawable.ic_image_grey_24dp)
                 .error(R.drawable.ic_image_grey_24dp)
                 .into(imageView)

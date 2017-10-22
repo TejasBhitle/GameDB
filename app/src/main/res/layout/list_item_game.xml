@@ -20,7 +20,8 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:background="#eee"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_image_grey_24dp" />
 
         <TextView
             android:id="@+id/list_item_game_name"

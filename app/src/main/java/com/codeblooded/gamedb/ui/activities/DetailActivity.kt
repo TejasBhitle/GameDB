@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
@@ -26,7 +27,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
 import me.relex.circleindicator.CircleIndicator
@@ -140,13 +140,19 @@ class DetailActivity : AppCompatActivity() {
             user_rating.text = userRating
             critic_rating.text = criticRating
 
-            Picasso.with(this)
+            Glide.with(this)
                     .load("https:" + game.img_url)
+                    .crossFade()
+                    .dontTransform()
                     .placeholder(R.drawable.ic_image_grey_24dp)
                     .error(R.drawable.ic_image_grey_24dp)
                     .into(image)
-            Picasso.with(this)
+            Glide.with(this)
                     .load("https:" + game.bg_url)
+                    .crossFade()
+                    .dontTransform()
+                    .placeholder(R.drawable.ic_image_grey_24dp)
+                    .error(R.drawable.ic_image_grey_24dp)
                     .into(bg)
 
             if (game.screenshots.length() > 1) {

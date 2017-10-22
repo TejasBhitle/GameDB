@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.codeblooded.gamedb.R
-import com.squareup.picasso.Picasso
 import org.json.JSONArray
 
 
@@ -32,8 +32,10 @@ class VideosAdapter(internal val context: Context, internal val jsonArray: JSONA
         val id: String = jsonArray.getJSONObject(position).getString("video_id")
         val name = jsonArray.getJSONObject(position).getString("name")
 
-        Picasso.with(context)
+        Glide.with(context)
                 .load("https://img.youtube.com/vi/$id/hqdefault.jpg")
+                .crossFade()
+                .dontTransform()
                 .placeholder(R.drawable.ic_image_grey_24dp)
                 .error(R.drawable.ic_image_grey_24dp)
                 .into(imageView)

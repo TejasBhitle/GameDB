@@ -13,12 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.codeblooded.gamedb.Constants
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.model.Game
 import com.codeblooded.gamedb.ui.activities.DetailActivity
-import com.squareup.picasso.Picasso
 import java.util.*
+
 
 /**
  * Created by tejas on 8/5/17.
@@ -43,12 +44,15 @@ class GameListAdapter(internal var context: Context, internal var games: ArrayLi
         val game = games.get(position)
 
         holder!!.name.text = game.name
-        Picasso.with(context)
+        Glide.with(context)
                 .load("https:" + game.img_url)
+                .crossFade()
+                .dontTransform()
                 .placeholder(R.drawable.ic_image_grey_24dp)
                 .error(R.drawable.ic_image_grey_24dp)
                 .into(holder.image)
-        holder.root.setOnClickListener { view ->
+
+        holder.root.setOnClickListener {
             val intent = Intent(context, DetailActivity::class.java)
             var bundle: Bundle? = null
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -63,11 +67,6 @@ class GameListAdapter(internal var context: Context, internal var games: ArrayLi
 
     }
 
-    fun onClick(view: View) {
+    override fun getItemCount(): Int = games.size
 
-    }
-
-    override fun getItemCount(): Int {
-        return games.size
-    }
 }

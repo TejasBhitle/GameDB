@@ -9,7 +9,8 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:background="#eee"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_image_grey_24dp" />
 
     <TextView
         android:id="@+id/video_title"
