@@ -25,7 +25,7 @@ class ScreenshotsAdapter(internal val context : Context, internal val jsonArray:
         val view : View = layoutInflator.inflate(R.layout.screenshot_item,container,false)
 
         val imageView: ImageView = view.findViewById(R.id.imageView)
-        var url: String = jsonArray.getJSONObject(position).getString("url")
+        var url: String = jsonArray.getJSONObject(position + 1).getString("url")
         url = url.replace("t_thumb","t_screenshot_big")
 
         Picasso.with(context)
@@ -34,20 +34,14 @@ class ScreenshotsAdapter(internal val context : Context, internal val jsonArray:
                 .error(R.drawable.ic_image_grey_24dp)
                 .into(imageView)
 
-
         container!!.addView(view)
         return view
     }
 
 
-    override fun isViewFromObject(view: View?, `object`: Any?): Boolean {
-        return view == `object`
-    }
+    override fun isViewFromObject(view: View?, `object`: Any?): Boolean = view == `object`
 
-    override fun getCount(): Int {
-
-        return jsonArray.length()
-    }
+    override fun getCount(): Int = (jsonArray.length() - 1)
 
     override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any?) {
         container!!.removeView(`object` as LinearLayout)
