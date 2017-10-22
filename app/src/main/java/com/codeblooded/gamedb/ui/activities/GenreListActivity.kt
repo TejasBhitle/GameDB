@@ -54,7 +54,7 @@ class GenreListActivity : AppCompatActivity() {
         if(RestClient.isNetworkConnected(this)) {
 
             progressDialog = ProgressDialog(this)
-            progressDialog.setMessage("Fetching Games")
+            progressDialog.setMessage(getString(R.string.please_wait))
             progressDialog.show()
 
             RestClient.addHeaders()
