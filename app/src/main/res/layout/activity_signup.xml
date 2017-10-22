@@ -8,9 +8,14 @@
     android:orientation="vertical"
     tools:context="com.codeblooded.gamedb.ui.activities.SignupActivity">
 
-    <include
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        app:theme="@style/ToolBarStyle" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,8 +37,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:textSize="20sp"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/passwordEditText"
@@ -41,8 +46,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:textSize="20sp"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,28 +57,28 @@
 
                 <Button
                     android:id="@+id/loginButton"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Login"
-                    style="@style/Base.Widget.AppCompat.Button.Colored"/>
+                    android:layout_weight="1"
+                    android:text="Login" />
 
                 <Button
                     android:id="@+id/signUpButton"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Sign up"
-                    style="@style/Base.Widget.AppCompat.Button.Colored"/>
+                    android:layout_weight="1"
+                    android:text="Sign up" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="OR"
                 android:layout_margin="30dp"
+                android:text="OR"
+                android:textAlignment="center"
                 android:textSize="18sp"/>
 
             <com.google.android.gms.common.SignInButton
@@ -94,24 +99,24 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="Signed in as:"
-                android:textSize="18sp"
-                android:padding="10dp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/emailTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/logoutButton"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Logout"
                 android:padding="10dp"
-                style="@style/Base.Widget.AppCompat.Button.Colored" />
+                android:text="Logout" />
 
         </LinearLayout>
 

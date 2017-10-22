@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Translucent" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <!-- ToolBar -->
     <style name="ToolBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@android:color/white</item>

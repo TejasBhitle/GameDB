@@ -21,7 +21,7 @@
         <activity android:name=".IntroActivity" />
         <activity
             android:name=".ui.activities.DetailActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.Translucent" />
 
         <activity android:name=".ui.activities.SignupActivity"
             android:parentActivityName=".MainActivity"

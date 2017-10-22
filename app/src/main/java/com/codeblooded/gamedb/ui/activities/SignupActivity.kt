@@ -1,25 +1,21 @@
 package com.codeblooded.gamedb.ui.activities
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.codeblooded.gamedb.OnSignUpCompleteListener
 import com.codeblooded.gamedb.R
 import com.codeblooded.gamedb.util.AuthHandler
-import com.google.android.gms.common.SignInButton
-import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.auth.api.Auth
-import android.content.Intent
-import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
-
-
-
-
+import com.google.firebase.auth.FirebaseAuth
 
 
 class SignupActivity : AppCompatActivity() {
@@ -54,7 +50,7 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        setTitle(R.string.account)
+        setTitle(R.string.sign_into)
         progressDialog = ProgressDialog(this)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
