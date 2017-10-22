@@ -81,8 +81,10 @@ class DetailActivity : AppCompatActivity() {
             toolbar_collapse.title = game.name
             description.text = game.description
             if (game.release_date != "") release_date.text = game.release_date
-            if (game.user_rating != 0.0) user_rating.text = String.format("%.2f", game.user_rating)
-            if (game.critic_rating != 0.0) critic_rating.text = String.format("%.2f", game.critic_rating)
+            //if (game.user_rating != "") user_rating.text = String.format("%.2f", game.user_rating)
+            //if (game.critic_rating != "") critic_rating.text = String.format("%.2f", game.critic_rating)
+            user_rating.text = game.user_rating
+            critic_rating.text = game.critic_rating
             Picasso.with(this)
                     .load("https:"+game.img_url)
                     .placeholder(R.drawable.ic_image_grey_24dp)

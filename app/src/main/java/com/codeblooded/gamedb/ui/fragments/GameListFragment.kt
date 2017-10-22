@@ -70,11 +70,13 @@ class GameListFragment : Fragment() {
     }
 
     fun getGames(baseUrl: String) {
-        progressDialog = ProgressDialog(context)
-        progressDialog.setMessage("Fetching Games")
-        progressDialog.show()
 
         if(RestClient.isNetworkConnected(context)) {
+
+            progressDialog = ProgressDialog(context)
+            progressDialog.setMessage("Fetching Games")
+            progressDialog.show()
+
             RestClient.addHeaders()
             RestClient.get(baseUrl, RequestParams(), object : JsonHttpResponseHandler() {
 
@@ -101,8 +103,8 @@ class GameListFragment : Fragment() {
             var description = ""
             var url: String = ""
             var storyline: String = ""
-            var user_rating: Double = 0.0
-            var critic_rating: Double = 0.0
+            var user_rating: String = ""
+            var critic_rating: String = ""
             var img_url: String = ""
             var bg_url: String = ""
             var games: JSONArray = JSONArray()
@@ -115,8 +117,8 @@ class GameListFragment : Fragment() {
                 if (obj.has("summary")) description = obj.get("summary").toString().replace(" \n  \n", "\n", true)
                 if (obj.has("url")) url = obj.getString("url")
                 if (obj.has("storyline")) storyline = obj.getString("storyline")
-                if (obj.has("rating")) user_rating = obj.getDouble("rating")
-                if (obj.has("aggregated_rating")) critic_rating = obj.getDouble("aggregated_rating")
+                if (obj.has("rating")) user_rating = obj.getString("rating")
+                if (obj.has("aggregated_rating")) critic_rating = obj.getString("aggregated_rating")
                 if (obj.has("cover")) img_url = obj.getJSONObject("cover").getString("url")
                 if (obj.has("games")) games = obj.getJSONArray("games")
                 if (obj.has("first_release_date")) release_date = sdf.format(Date(obj.get("first_release_date") as Long))

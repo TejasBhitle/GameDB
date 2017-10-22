@@ -20,6 +20,7 @@ import com.codeblooded.gamedb.ui.fragments.CollectionListFragment
 import com.codeblooded.gamedb.ui.fragments.FavoritesFragment
 import com.codeblooded.gamedb.ui.fragments.GameListFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,6 +38,13 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
+        try {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+        }catch (e: Exception){
+            //No idea why this error occurs alternately
+            e.printStackTrace()
+        }
+
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = FirebaseAuth.getInstance().currentUser
         isLoggedIn = (currentUser != null)

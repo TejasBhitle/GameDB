@@ -46,14 +46,15 @@ class FavoritesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if(RestClient.isNetworkConnected(activity)) {
+
+        //if(RestClient.isNetworkConnected(activity)) {
             val task = FavoriteFetchAsyncTask(activity)
             progressDialog.show()
             task.execute()
-        }
-        else{
+        //}
+        /*else{
             Toast.makeText(context,"No network",Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 
     inner class FavoriteFetchAsyncTask(activity: Activity) : AsyncTask<String, Void, ArrayList<Game>>() {
@@ -67,6 +68,8 @@ class FavoritesFragment : Fragment() {
             val uid = FirebaseAuth.getInstance().currentUser?.uid as String
             val ref = root.child(uid).child(Constants.FAVORITES)
 
+            ref.keepSynced(true)
+
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -77,8 +80,8 @@ class FavoritesFragment : Fragment() {
                         val description = snapshot.child(Constants.DESCRIPTION).value as String
                         val url = snapshot.child(Constants.URL).value as String
                         val storyline = snapshot.child(Constants.STORYLINE).value as String
-                        val userRating = snapshot.child(Constants.USER_RATING).value as Double
-                        val criticRating = snapshot.child(Constants.CRITIC_RATING).value as Double
+                        val userRating = snapshot.child(Constants.USER_RATING).value.toString() as String
+                        val criticRating = snapshot.child(Constants.CRITIC_RATING).value.toString() as String
                         val imgUrl = snapshot.child(Constants.IMG_URL).value as String
                         val bgUrl = snapshot.child(Constants.BG_URL).value as String
                         val releaseDate = snapshot.child(Constants.RELEASE_DATE).value as String

@@ -16,8 +16,8 @@ import org.json.JSONArray
     var description : String = ""
     var url: String = ""
     var storyline: String =""
-    var user_rating: Double = 0.0
-    var critic_rating: Double = 0.0
+    var user_rating: String = ""
+    var critic_rating: String = ""
     var img_url : String = ""
     var bg_url : String = ""
     var games: JSONArray = JSONArray()
@@ -47,8 +47,8 @@ import org.json.JSONArray
         description = parcel.readString()
         url = parcel.readString()
         storyline = parcel.readString()
-        user_rating = parcel.readDouble()
-        critic_rating = parcel.readDouble()
+        user_rating = parcel.readString()
+        critic_rating = parcel.readString()
         img_url = parcel.readString()
         bg_url = parcel.readString()
         games = JSONArray(parcel.readString())
@@ -63,8 +63,8 @@ import org.json.JSONArray
         parcel.writeString(description)
         parcel.writeString(url)
         parcel.writeString(storyline)
-        parcel.writeDouble(user_rating)
-        parcel.writeDouble(critic_rating)
+        parcel.writeString(user_rating)
+        parcel.writeString(critic_rating)
         parcel.writeString(img_url)
         parcel.writeString(bg_url)
         parcel.writeString(games.toString())
