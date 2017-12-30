@@ -20,7 +20,7 @@ class ScreenshotsAdapter(internal val context : Context, internal val jsonArray:
     private val LOG = "CustomPagerAdapter"
     lateinit var layoutInflator : LayoutInflater
 
-    override fun instantiateItem(container: ViewGroup?, position: Int): Any {
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
         layoutInflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view : View = layoutInflator.inflate(R.layout.screenshot_item,container,false)
 
@@ -36,16 +36,16 @@ class ScreenshotsAdapter(internal val context : Context, internal val jsonArray:
                 .error(R.drawable.ic_image_grey_24dp)
                 .into(imageView)
 
-        container!!.addView(view)
+        container.addView(view)
         return view
     }
 
 
-    override fun isViewFromObject(view: View?, `object`: Any?): Boolean = view == `object`
+    override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
     override fun getCount(): Int = (jsonArray.length() - 1)
 
-    override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any?) {
-        container!!.removeView(`object` as LinearLayout)
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as LinearLayout)
     }
 }

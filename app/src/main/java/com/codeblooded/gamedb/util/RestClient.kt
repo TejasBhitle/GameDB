@@ -5,9 +5,9 @@ import android.net.ConnectivityManager
 import android.util.Log
 import com.codeblooded.gamedb.getAPIKey
 import com.codeblooded.gamedb.getBaseUrl
+import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import com.loopj.android.http.RequestParams
-import com.loopj.android.http.AsyncHttpClient
 
 
 /**
@@ -39,8 +39,8 @@ class RestClient {
             return BASE_URL + relativeUrl
         }
 
-        fun isNetworkConnected(context: Context): Boolean {
-            val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        fun isNetworkConnected(context: Context?): Boolean {
+            val manager = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = manager.activeNetworkInfo
             return networkInfo != null && networkInfo.isConnected
         }

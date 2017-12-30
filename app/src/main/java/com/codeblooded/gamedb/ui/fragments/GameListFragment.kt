@@ -51,11 +51,11 @@ class GameListFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         // !!. is a non-null asserted call
-        val view = inflater!!.inflate(R.layout.fragment_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
 
 
         textview = view.findViewById(R.id.centerTextView)
@@ -67,7 +67,7 @@ class GameListFragment : Fragment() {
         else
             recyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        pref = context.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+        pref = context!!.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
         if (!search) getGames(url)
         return view

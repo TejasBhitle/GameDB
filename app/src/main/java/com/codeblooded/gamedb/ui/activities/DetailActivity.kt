@@ -164,7 +164,7 @@ class DetailActivity : AppCompatActivity() {
                     .load("https:" + game.bg_url)
                     .asBitmap()
                     .into(object : SimpleTarget<Bitmap>(889, 500) {
-                        override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
+                        override fun onResourceReady(resource: Bitmap, glideAnimation: GlideAnimation<in Bitmap>?) {
                             var palette = Palette.from(resource).generate()
                             toolbar_collapse.setContentScrimColor(palette.getDarkVibrantColor(palette.getMutedColor(resources.getColor(R.color.colorPrimary))))
                             toolbar_collapse.setBackgroundColor(palette.getDarkVibrantColor(palette.getMutedColor(resources.getColor(R.color.colorPrimary))))

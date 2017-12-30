@@ -34,19 +34,19 @@ class GenreListFragment : Fragment() {
     lateinit var pref: SharedPreferences
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         // !!. is a non-null asserted call
-        val view = inflater!!.inflate(R.layout.fragment_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
 
         textview = view.findViewById(R.id.centerTextView)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        recyclerView.layoutManager = GridLayoutManager(context!!, 1)
 
-        pref = context.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
+        pref = context!!.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE)
 
         getGenres("/genres/")
         return view
@@ -104,7 +104,7 @@ class GenreListFragment : Fragment() {
         if (genreList.size == 0)
             textview.text = getString(R.string.empty_list)
 
-        recyclerView.adapter = GenreListAdapter(context, genreList)
+        recyclerView.adapter = GenreListAdapter(context!!, genreList)
     }
 
 }
